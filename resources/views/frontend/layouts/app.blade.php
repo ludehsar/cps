@@ -23,6 +23,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    @include('frontend.layouts._parts.navbar')
     <div class="wrapper">
         @yield('content')
     </div>
