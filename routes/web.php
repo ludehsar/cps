@@ -15,4 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/profile', 'HomeController@profile')->name('user_profile');
+    Route::get('/settings', 'HomeController@settings')->name('user_settings');
+});
+
 Route::get('/', 'HomeController@index')->name('home');

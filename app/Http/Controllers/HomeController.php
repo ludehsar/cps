@@ -25,4 +25,14 @@ class HomeController extends Controller
     {
         return view('frontend.home');
     }
+
+    public function profile()
+    {
+        return view('frontend.profile.profile');
+    }
+
+    public function settings()
+    {
+        return view('frontend.profile.settings');
+    }
 }
