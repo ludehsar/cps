@@ -1,8 +1,11 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
-// Variables
-@import 'variables';
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800');
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Nucleo icons
+@import 'nucleo-icons.css';
+
+// Theme css
+@import 'argon.css';
