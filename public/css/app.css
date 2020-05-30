@@ -34770,5 +34770,7 @@ pre>code.highlight {
 .scrollbar-inner .scroll-element.scroll-x {
   height: 3px;
   bottom: 0;
+}.z-1000 {
+  z-index: 1000;
 }
 

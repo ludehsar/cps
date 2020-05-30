@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-dark bg-default headroom">
+<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-dark bg-default headroom z-1000">
     <div class="container">
         <a class="navbar-brand mr-lg-5" href="{{ route('home') }}">
             {{ config('app.name', 'CPS') }}
@@ -89,7 +89,7 @@
                 </li>
                 @else
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ Auth::user()->username }} <span class="caret"></span>
                     </a>
 

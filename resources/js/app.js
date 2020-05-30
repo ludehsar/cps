@@ -5,6 +5,7 @@
  */
 
 require('./bootstrap');
+require('./plugins/datetimepicker');
 require('./argon');
 
 /**
