@@ -73,6 +73,11 @@
                         <a href="../examples/register.html" class="dropdown-item">Register</a>
                     </div>
                 </li>
+                @if (!Auth::guest() && Auth::user()->is_admin)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('dashboard') }}">Admin Dashboard</a>
+                    </li>
+                @endif
             </ul>
             <ul class="navbar-nav align-items-lg-center ml-lg-auto">
                 @guest

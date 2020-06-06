@@ -1,0 +1,16 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800');
+
+// Bootstrap
+@import '~bootstrap/dist/css/bootstrap.css';
+
+// Nucleo icons
+@import 'nucleo-icons.css';
+
+// Theme css
+@import 'argon-dashboard.css';
+
+
+.z-1000 {
+    z-index: 1000;
+}
