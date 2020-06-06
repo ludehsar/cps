@@ -25,6 +25,9 @@
 <body>
     @include('frontend.layouts._parts.navbar')
     <div class="wrapper">
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger">{{ $error }}</div>
+        @endforeach
         @yield('content')
     </div>
 </body>
