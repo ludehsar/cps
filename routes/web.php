@@ -17,6 +17,10 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::get('/', 'AdminController@showDashboard')->name('dashboard');
+    Route::get('/ladders', 'AdminController@showLadder')->name('admin-ladder-list');
+    Route::get('/ladders/new', 'AdminController@showNewLadderForm')->name('admin-ladder-form');
+    Route::post('/ladders/new', 'AdminController@createNewLadder')->name('create-ladder');
+    Route::get('/ladders/{id}', 'AdminController@showLadderProblems')->name('admin-ladder-problems');
 });
 
 Route::group(['middleware' => 'auth'], function() {

@@ -28,9 +28,9 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('dashboard') }}">
+                        <a class="nav-link" href="{{ route('admin-ladder-list') }}">
                             <i class="ni ni-folder-17 text-yellow"></i>
-                            <span class="nav-link-text">Ladder</span>
+                            <span class="nav-link-text">Ladders</span>
                         </a>
                     </li>
                 </ul>

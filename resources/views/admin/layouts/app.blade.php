@@ -31,10 +31,13 @@
         @endforeach
         @yield('header')
         <div class="container-fluid mt--6">
-            @yield('content')
+            <div style="height: 100vh;">
+                @yield('content')
+            </div>
             @include('admin.layouts._parts.footer')
         </div>
     </div>
     <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
+    @stack('scripts')
 </body>
 </html>
