@@ -10,7 +10,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/.vscode
+/.vscode/*
 *.code-workspace
 
 # Local History for Visual Studio Code
