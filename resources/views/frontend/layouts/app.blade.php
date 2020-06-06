@@ -30,5 +30,6 @@
         @endforeach
         @yield('content')
     </div>
+    <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 </body>
 </html>

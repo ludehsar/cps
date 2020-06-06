@@ -35,5 +35,6 @@
             @include('admin.layouts._parts.footer')
         </div>
     </div>
+    <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
 </body>
 </html>
