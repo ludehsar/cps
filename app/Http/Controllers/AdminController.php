@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\NewLadderRequest;
 use App\Models\Ladder;
+use App\DataTables\LadderDataTable;
 
 class AdminController extends Controller
 {
@@ -23,9 +24,9 @@ class AdminController extends Controller
         return view('admin.dashboard.dashboard');
     }
 
-    public function showLadder()
+    public function showLadder(LadderDataTable $datatable)
     {
-        return view('admin.ladder.lists');
+        return $datatable->render('admin.ladder.lists');
     }
 
     public function showLadderProblems(int $ladderId)

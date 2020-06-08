@@ -9,16 +9,14 @@
 
     <title>{{ config('app.name', 'CPS') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
+    
     <!-- Font Awesome Icons -->
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-
+    
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet">
-
+    
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -26,10 +24,12 @@
     @include('frontend.layouts._parts.navbar')
     <div class="wrapper">
         @foreach ($errors->all() as $error)
-            <div class="alert alert-danger">{{ $error }}</div>
+        <div class="alert alert-danger">{{ $error }}</div>
         @endforeach
         @yield('content')
     </div>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('vendor/datatables/buttons.server-side.js') }}"></script>
     @stack('scripts')
 </body>
