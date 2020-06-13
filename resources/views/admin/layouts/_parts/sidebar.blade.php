@@ -13,7 +13,7 @@
                 <!-- Nav items -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('dashboard') }}">
+                        <a class="nav-link {{ (Route::is('dashboard')) ? 'active' : '' }}" href="{{ route('dashboard') }}">
                             <i class="ni ni-tv-2 text-primary"></i>
                             <span class="nav-link-text">Dashboard</span>
                         </a>
@@ -28,7 +28,7 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin-ladder-list') }}">
+                        <a class="nav-link {{ (Route::is('admin-ladder-list')) ? 'active' : '' }}" href="{{ route('admin-ladder-list') }}">
                             <i class="ni ni-folder-17 text-yellow"></i>
                             <span class="nav-link-text">Ladders</span>
                         </a>
