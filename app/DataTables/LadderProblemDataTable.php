@@ -73,7 +73,8 @@ class LadderProblemDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('ladder_id'),
+            Column::make('ladder_id')
+                    ->orderable(false),
             Column::make('problem_title'),
             Column::make('online_judge'),
             Column::make('problem_difficulty'),
