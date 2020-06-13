@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\DataTables\LadderDataTable;
 use App\Models\Ladder;
+use App\DataTables\LadderProblemDataTable;
 
 class AdminStaticController extends Controller
 {
@@ -28,9 +29,15 @@ class AdminStaticController extends Controller
         return $datatable->render('admin.ladder.lists');
     }
 
-    public function showLadderProblems(int $ladderId)
+    public function showLadderProblems(LadderProblemDataTable $datatable, $ladderId)
     {
-        return view('admin.ladder.lists');
+        $ladder = Ladder::find($ladderId);
+
+        if ($ladder == null) {
+            return abort(404);
+        }
+
+        return $datatable->with('ladderId', $ladder->id)->render('admin.ladder.problem-lists', compact('ladder'));
     }
 
     public function showNewLadderForm()

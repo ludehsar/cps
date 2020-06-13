@@ -22,13 +22,13 @@ class LadderDataTable extends DataTable
         return datatables()
                 ->eloquent($query)
                 ->editColumn('ladder_name', function(Ladder $ladder) {
-                    return '<a href="#" style="text-decoration: inherit; color: inherit;">' . $ladder->ladder_name . '</a>';
+                    return '<a href="' . route('admin-ladder-problems', $ladder->id) . '" style="text-decoration: inherit; color: inherit;">' . $ladder->ladder_name . '</a>';
                 })
                 ->editColumn('created_at', function(Ladder $ladder) {
                     return $ladder->created_at->format('d-M-Y h:m:s A');
                 })
                 ->addColumn('action', function(Ladder $ladder) {
-                    return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="#" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Ladder"><i class="fas fa-binoculars"></i></a><a href="' . route('admin-ladder-edit-form', $ladder->id) . '" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit Ladder Information"><i class="fas fa-edit"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete The Ladder"><i class="fas fa-trash"></i></a></div>';
+                    return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="' . route('admin-ladder-problems', $ladder->id) . '" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Ladder"><i class="fas fa-binoculars"></i></a><a href="' . route('admin-ladder-edit-form', $ladder->id) . '" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit Ladder Information"><i class="fas fa-edit"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete The Ladder"><i class="fas fa-trash"></i></a></div>';
                 })
                 ->rawColumns(['ladder_name', 'action']);
     }
