@@ -28,7 +28,7 @@ class LadderDataTable extends DataTable
                     return $ladder->created_at->format('d-M-Y h:m:s A');
                 })
                 ->addColumn('action', function(Ladder $ladder) {
-                    return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="#" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Ladder"><i class="fas fa-binoculars"></i></a><a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit Ladder Information"><i class="fas fa-edit"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete The Ladder"><i class="fas fa-trash"></i></a></div>';
+                    return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="#" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Ladder"><i class="fas fa-binoculars"></i></a><a href="' . route('admin-ladder-edit-form', $ladder->id) . '" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit Ladder Information"><i class="fas fa-edit"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete The Ladder"><i class="fas fa-trash"></i></a></div>';
                 })
                 ->rawColumns(['ladder_name', 'action']);
     }

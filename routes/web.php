@@ -16,11 +16,13 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
-    Route::get('/', 'AdminController@showDashboard')->name('dashboard');
-    Route::get('/ladders', 'AdminController@showLadder')->name('admin-ladder-list');
-    Route::get('/ladders/new', 'AdminController@showNewLadderForm')->name('admin-ladder-form');
-    Route::post('/ladders/new', 'AdminController@createNewLadder')->name('create-ladder');
-    Route::get('/ladders/{id}', 'AdminController@showLadderProblems')->name('admin-ladder-problems');
+    Route::get('/', 'AdminStaticController@showDashboard')->name('dashboard');
+    Route::get('/ladders', 'AdminStaticController@showLadder')->name('admin-ladder-list');
+    Route::get('/ladders/new', 'AdminStaticController@showNewLadderForm')->name('admin-ladder-create-form');
+    Route::get('/ladders/edit/{id}', 'AdminStaticController@showEditLadderForm')->name('admin-ladder-edit-form');
+    Route::post('/ladders/new', 'LadderController@createNewLadder')->name('create-ladder');
+    Route::post('/ladders/edit/{id}', 'LadderController@editLadder')->name('edit-ladder');
+    Route::get('/ladders/{id}', 'AdminStaticController@showLadderProblems')->name('admin-ladder-problems');
 });
 
 Route::group(['middleware' => 'auth'], function() {

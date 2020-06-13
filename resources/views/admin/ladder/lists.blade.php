@@ -16,7 +16,7 @@
                         </nav>
                     </div>
                     <div class="col-lg-6 col-5 text-right">
-                        <a href="{{ route('admin-ladder-form') }}" class="btn btn-sm btn-neutral">Add A New Ladder</a>
+                        <a href="{{ route('admin-ladder-create-form') }}" class="btn btn-sm btn-neutral">Add A New Ladder</a>
                         <a href="#" class="btn btn-sm btn-neutral">Add A New Problem</a>
                     </div>
                 </div>
