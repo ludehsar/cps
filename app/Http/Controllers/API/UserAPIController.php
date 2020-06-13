@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserSettingsRequest;
 use Illuminate\Support\Facades\Hash;
+use App\Jobs\FetchUserCFSubmissions;
 
 class UserAPIController extends Controller
 {
@@ -44,6 +45,9 @@ class UserAPIController extends Controller
         }
 
         $user->save();
+
+        // Fetches user cf submissions
+        FetchUserCFSubmissions::dispatch($user);
 
         return response(null, 200);
     }
