@@ -28,7 +28,7 @@ class LadderProblemDataTable extends DataTable
                 return $problem->created_at->format('d-M-Y h:m:s A');
             })
             ->addColumn('action', function(LadderProblem $problem) {
-                return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="' . $problem->problem_url . '" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Go to the problem" target="_blank"><i class="fas fa-external-link-alt"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete The Ladder"><i class="fas fa-trash"></i></a></div>';
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="' . $problem->problem_url . '" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Go to the problem" target="_blank"><i class="fas fa-external-link-alt"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete The Problem"><i class="fas fa-trash"></i></a></div>';
             })
             ->rawColumns(['problem_title', 'action']);
     }

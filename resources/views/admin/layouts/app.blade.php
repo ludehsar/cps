@@ -29,7 +29,7 @@
         @endforeach
         @yield('header')
         <div class="container-fluid mt--6">
-            <div style="height: 100vh;">
+            <div style="min-height: 100vh;">
                 @yield('content')
             </div>
             @include('admin.layouts._parts.footer')
