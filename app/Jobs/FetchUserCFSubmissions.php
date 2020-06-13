@@ -45,7 +45,7 @@ class FetchUserCFSubmissions implements ShouldQueue
         if ($res->status == "OK") {
             foreach ($res->result as $submission) {
                 if ($submission->verdict == "OK" && $submission->testset == "TESTS") {
-                    $previousSameSubmission = CFSubmission::where('contest_id', $submission->contestId)->where('problem_index', $submission->problem->index)->first();
+                    $previousSameSubmission = CFSubmission::where('user_id', $this->user->id)->where('contest_id', $submission->contestId)->where('problem_index', $submission->problem->index)->first();
 
                     if ($previousSameSubmission != null) continue;
 
