@@ -25,7 +25,7 @@
     <div class="main-content" id="panel">
         @include('admin.layouts._parts.navbar')
         @foreach ($errors->all() as $error)
-        <div class="alert alert-danger">{{ $error }}</div>
+            <div class="alert alert-danger" role="alert">{{ $error }}</div>
         @endforeach
         @yield('header')
         <div class="container-fluid mt--6">

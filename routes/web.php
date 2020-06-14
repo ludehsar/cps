@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::post('/ladders/new', 'LadderController@createNewLadder')->name('create-ladder');
     Route::post('/ladders/edit/{id}', 'LadderController@editLadder')->name('edit-ladder');
     Route::get('/ladders/{id}', 'AdminStaticController@showLadderProblems')->name('admin-ladder-problems');
+    Route::get('/users', 'AdminStaticController@showUsersList')->name('admin-user-list');
 });
 
 Route::group(['middleware' => 'auth'], function() {

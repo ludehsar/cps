@@ -17,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/user', 'API\UserAPIController@getAuthUser');
     Route::post('/settings', 'API\UserAPIController@saveUserProfile');
+    Route::post('/fetch-cf-submission/{id}', 'API\UserAPIController@fetchUserCFSubmission');
 });

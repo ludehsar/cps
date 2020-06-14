@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\DataTables\LadderDataTable;
 use App\Models\Ladder;
 use App\DataTables\LadderProblemDataTable;
+use App\DataTables\UserDataTable;
 
 class AdminStaticController extends Controller
 {
@@ -54,5 +55,10 @@ class AdminStaticController extends Controller
         }
 
         return view('admin.ladder.edit-ladder', compact('ladder'));
+    }
+
+    public function showUsersList(UserDataTable $datatable)
+    {
+        return $datatable->render('admin.user.lists');
     }
 }

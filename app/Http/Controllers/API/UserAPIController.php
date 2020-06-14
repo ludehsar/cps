@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserSettingsRequest;
@@ -46,9 +47,22 @@ class UserAPIController extends Controller
 
         $user->save();
 
+        $this->fetchUserCFSubmission($user->id);
+
+        return response(null, 200);
+    }
+
+    public function fetchUserCFSubmission($id)
+    {
+        $user = User::find($id);
+
+        if ($user == null) {
+            return response('Such user does not exist.', 404);
+        }
+
         // Fetches user cf submissions
         FetchUserCFSubmissions::dispatch($user);
 
-        return response(null, 200);
+        return response('Codeforces submission will be updated within 5 minutes.', 200);
     }
 }

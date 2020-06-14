@@ -33,6 +33,12 @@
                             <span class="nav-link-text">Ladders</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ (Route::is('admin-user-list')) ? 'active' : '' }}" href="{{ route('admin-user-list') }}">
+                            <i class="ni ni-circle-08 text-red"></i>
+                            <span class="nav-link-text">Users</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
