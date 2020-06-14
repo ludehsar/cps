@@ -41,4 +41,26 @@
 
 @push('scripts')
     {{ $dataTable->scripts() }}
+
+    <script>
+        $('#user-table').on('click', '#retrieve-submission', function(event) {
+            let userId = $(event.currentTarget).data('userid');
+
+            axios.post('/api/fetch-cf-submission/' + userId).then((res) => {
+                Swal.fire({
+                    position: 'bottom-end',
+                    text: res.data,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }).catch((err) => {
+                Swal.fire({
+                    position: 'bottom-end',
+                    text: err.data,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+        });
+    </script>
 @endpush

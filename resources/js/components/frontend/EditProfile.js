@@ -127,8 +127,9 @@ class EditProfile extends React.Component {
             Swal.fire({
                 icon: 'success',
                 title: 'Your profile has been saved',
+                text: 'Your cf submissions will be fetched within 5 minutes.',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 3000
             });
         }).catch((response) => {
             Swal.fire({

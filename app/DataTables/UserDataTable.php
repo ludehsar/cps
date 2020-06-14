@@ -28,7 +28,7 @@ class UserDataTable extends DataTable
                 return $user->updated_at->format('d-M-Y h:m:s A');
             })
             ->addColumn('action', function(User $user) {
-                return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="View Ladder"><i class="fas fa-binoculars"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete The Ladder"><i class="fas fa-trash"></i></a></div>';
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="View User Details"><i class="fas fa-binoculars"></i></a><a href="#" class="btn btn-info" id="retrieve-submission" data-toggle="tooltip" data-placement="top" data-userid="' . $user->id . '" title="Retrieve solution"><i class="fas fa-sync-alt"></i></a></div>';
             })
             ->rawColumns(['action']);
     }
