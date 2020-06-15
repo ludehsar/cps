@@ -12,7 +12,7 @@
                     <h1 class="display-2 text-white">{{ $user->name }}</h1>
                     <p class="text-white mt-0 mb-5">This is the user's profile page. You can see the progress he / she has made and manage and instruct them to do their job</p>
                     <a href="javascript:void(0)" class="btn btn-neutral" id="retrieve-submission-btn">Retrieve Submission</a>
-                    <a href="javascript:void(0)" class="btn btn-danger" id="delete-profile-btn">Delete profile</a>
+                    <a href="javascript:void(0)" class="btn btn-danger" id="delete-profile-btn">Delete Profile</a>
                     <form id="delete-user-form" action="{{ route('admin-user-delete', $user->id) }}" method="POST" style="display: none;">
                         @csrf
                     </form>
@@ -24,6 +24,67 @@
 
 @section('content')
 <div id="user-profile" data-user-id={{ $user->id }}></div>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="mb-0">Ladder Progress</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table table-hover align-items-center table-flush">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Ladder Name</th>
+                            <th scope="col">Ladder Description</th>
+                            <th scope="col">Ladder Difficulty</th>
+                            <th scope="col">Progress / Solved</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($ladders as $ladder)
+                            <tr>
+                                <th scope="row">
+                                    {{ $ladder->id }}
+                                </th>
+                                <td>
+                                    {{ $ladder->ladder_name }}
+                                </td>
+                                <td>
+                                    {{ $ladder->ladder_description }}
+                                </td>
+                                <td>
+                                    {{ $ladder->ladder_difficulty }}
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <span class="mr-2">60%</span>
+                                        <div>
+                                            <div class="progress">
+                                                <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <a href="#" class="btn btn-sm btn-default">View Details</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col">
         <div class="card bg-default text-white shadow">

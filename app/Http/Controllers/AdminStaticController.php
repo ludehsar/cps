@@ -72,7 +72,9 @@ class AdminStaticController extends Controller
             return abort(404);
         }
 
-        return $datatable->with('user_id', $user->id)->render('admin.user.profile', compact('user'));
+        $ladders = Ladder::all();
+
+        return $datatable->with('user_id', $user->id)->render('admin.user.profile', compact('user', 'ladders'));
     }
 
     public function showNewUserForm()
