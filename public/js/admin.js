@@ -88373,11 +88373,95 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
         return res.json();
       }).then(function (data) {
         _this.setState({
-          rating: data.result[0].rating,
-          maxRating: data.result[0].maxRating,
-          maxRank: data.result[0].maxRank,
+          rating: data.result[0].hasOwnProperty('rating') ? data.result[0].rating : 0,
+          maxRating: data.result[0].hasOwnProperty('maxRating') ? data.result[0].maxRating : 0,
+          maxRank: data.result[0].hasOwnProperty('maxRank') ? data.result[0].maxRank : 'unrated',
+          rank: data.result[0].hasOwnProperty('rank') ? data.result[0].rank : 'unrated',
           profilePicUrl: data.result[0].titlePhoto,
           handle: data.result[0].handle
+        }, function () {
+          switch (_this.state.rank) {
+            case 'legendary grandmaster':
+              {
+                _this.setState({
+                  handleClassName: 'legendary-gm-tag'
+                });
+
+                break;
+              }
+
+            case 'international grandmaster' || false:
+              {
+                _this.setState({
+                  handleClassName: 'gm-tag'
+                });
+
+                break;
+              }
+
+            case 'international master' || false:
+              {
+                _this.setState({
+                  handleClassName: 'master-tag'
+                });
+
+                break;
+              }
+
+            case 'candidate master':
+              {
+                _this.setState({
+                  handleClassName: 'cm-tag'
+                });
+
+                break;
+              }
+
+            case 'expert':
+              {
+                _this.setState({
+                  handleClassName: 'expert-tag'
+                });
+
+                break;
+              }
+
+            case 'specialist':
+              {
+                _this.setState({
+                  handleClassName: 'specialist-tag'
+                });
+
+                break;
+              }
+
+            case 'pupil':
+              {
+                _this.setState({
+                  handleClassName: 'pupil-tag'
+                });
+
+                break;
+              }
+
+            case 'newbie':
+              {
+                _this.setState({
+                  handleClassName: 'newbie-tag'
+                });
+
+                break;
+              }
+
+            default:
+              {
+                _this.setState({
+                  handleClassName: ''
+                });
+
+                break;
+              }
+          }
         });
       });
     });
@@ -88462,8 +88546,10 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
       rating: 0,
       maxRating: 0,
       maxRank: '',
+      rank: '',
       profilePicUrl: '',
-      handle: ''
+      handle: '',
+      handleClassName: ''
     };
     return _this;
   }
@@ -88533,7 +88619,7 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
       }, "Current Rating"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h5", {
-        className: "h3"
+        className: "h3 " + this.state.handleClassName
       }, this.state.handle == '' ? this.state.cf_handle : this.state.handle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "h4 font-weight-300 text-uppercase"
       }, this.state.maxRank))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {

@@ -16,8 +16,10 @@ class UserProfile extends React.Component {
             rating: 0,
             maxRating: 0,
             maxRank: '',
+            rank: '',
             profilePicUrl: '',
             handle: '',
+            handleClassName: '',
         }
     }
 
@@ -45,11 +47,69 @@ class UserProfile extends React.Component {
         fetch('https://codeforces.com/api/user.info?handles=' + this.state.cf_handle)
             .then(res => res.json()).then((data) => {
                 this.setState({
-                    rating: data.result[0].rating,
-                    maxRating: data.result[0].maxRating,
-                    maxRank: data.result[0].maxRank,
+                    rating: (data.result[0].hasOwnProperty('rating') ? data.result[0].rating : 0),
+                    maxRating: (data.result[0].hasOwnProperty('maxRating') ? data.result[0].maxRating : 0),
+                    maxRank: (data.result[0].hasOwnProperty('maxRank') ? data.result[0].maxRank : 'unrated'),
+                    rank: (data.result[0].hasOwnProperty('rank') ? data.result[0].rank : 'unrated'),
                     profilePicUrl: data.result[0].titlePhoto,
                     handle: data.result[0].handle,
+                }, () => {
+                    switch (this.state.rank) {
+                        case 'legendary grandmaster': {
+                            this.setState({
+                                handleClassName: 'legendary-gm-tag'
+                            });
+                            break;
+                        }
+                        case ('international grandmaster' || 'grandmaster'): {
+                            this.setState({
+                                handleClassName: 'gm-tag'
+                            });
+                            break;
+                        }
+                        case ('international master' || 'master'): {
+                            this.setState({
+                                handleClassName: 'master-tag'
+                            });
+                            break;
+                        }
+                        case ('candidate master'): {
+                            this.setState({
+                                handleClassName: 'cm-tag'
+                            });
+                            break;
+                        }
+                        case ('expert'): {
+                            this.setState({
+                                handleClassName: 'expert-tag'
+                            });
+                            break;
+                        }
+                        case ('specialist'): {
+                            this.setState({
+                                handleClassName: 'specialist-tag'
+                            });
+                            break;
+                        }
+                        case ('pupil'): {
+                            this.setState({
+                                handleClassName: 'pupil-tag'
+                            });
+                            break;
+                        }
+                        case ('newbie'): {
+                            this.setState({
+                                handleClassName: 'newbie-tag'
+                            });
+                            break;
+                        }
+                        default: {
+                            this.setState({
+                                handleClassName: ''
+                            });
+                            break;
+                        }
+                    }
                 });
             });
     }
@@ -155,7 +215,7 @@ class UserProfile extends React.Component {
                                 </div>
                             </div>
                             <div className="text-center">
-                                <h5 className="h3">
+                                <h5 className={"h3 " + this.state.handleClassName}>
                                     {(this.state.handle == '' ? this.state.cf_handle : this.state.handle)}
                                 </h5>
                                 <div className="h4 font-weight-300 text-uppercase">{this.state.maxRank}</div>

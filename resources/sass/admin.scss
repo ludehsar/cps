@@ -18,3 +18,39 @@
 .z-1000 {
     z-index: 1000;
 }
+
+.legendary-gm-tag {
+    color: red;
+}
+
+.legendary-gm-tag::first-letter {
+    color: black !important;
+}
+
+.gm-tag {
+    color: red;
+}
+
+.master-tag {
+    color: orange;
+}
+
+.cm-tag {
+    color: violet;
+}
+
+.expert-tag {
+    color: blue;
+}
+
+.specialist-tag {
+    color: cyan;
+}
+
+.pupil-tag {
+    color: green;
+}
+
+.newbie-tag {
+    color: gray;
+}
