@@ -44,7 +44,7 @@ class FetchUserCFSubmissions implements ShouldQueue
 
         if ($res->status == "OK") {
             foreach ($res->result as $submission) {
-                if ($submission->verdict == "OK" && $submission->testset == "TESTS") {
+                if ($submission->verdict == "OK" && $submission->testset == "TESTS" && isset($submission->contestId)) {
                     $previousSameSubmission = CFSubmission::where('user_id', $this->user->id)->where('contest_id', $submission->contestId)->where('problem_index', $submission->problem->index)->first();
 
                     if ($previousSameSubmission != null) continue;
@@ -54,9 +54,25 @@ class FetchUserCFSubmissions implements ShouldQueue
                         'submission_id' => $submission->id,
                         'contest_id' => $submission->contestId,
                         'problem_index' => $submission->problem->index,
+                        'problem_title' => $submission->problem->name,
                     ]);
                 }
             }
         }
+
+        $this->user->invalid_cf_handle = 0;
+        $this->user->save();
+    }
+
+    /**
+     * The job failed to process.
+     *
+     * @param  Exception  $exception
+     * @return void
+     */
+    public function failed(Exception $exception)
+    {
+        $this->user->invalid_cf_handle = 1;
+        $this->user->save();
     }
 }

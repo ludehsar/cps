@@ -18,4 +18,9 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/user', 'API\UserAPIController@getAuthUser');
     Route::post('/settings', 'API\UserAPIController@saveUserProfile');
     Route::post('/fetch-cf-submission/{id}', 'API\UserAPIController@fetchUserCFSubmission');
+
+    Route::group(['middleware' => 'admin'], function() {
+        Route::get('/user/{id}', 'API\UserAPIController@getUser');
+        Route::post('/user/change/{id}', 'API\UserAPIController@changeProfileDataAsAdmin');
+    });
 });

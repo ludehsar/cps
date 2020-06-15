@@ -2,14 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\User;
+use App\Models\CFSubmission;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UserDataTable extends DataTable
+class CFSubmissionDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,27 +21,27 @@ class UserDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('created_at', function(User $user) {
-                return $user->created_at->format('d-M-Y h:m:s A');
+            ->editColumn('problem_title', function(CFSubmission $submission) {
+                return '<a href="https://codeforces.com/contest/' . $submission->contest_id . '/problem/' . $submission->problem_index . '" style="text-decoration: inherit; color: inherit;" target="_blank">' . $submission->problem_title . '</a>';
             })
-            ->editColumn('updated_at', function(User $user) {
-                return $user->updated_at->format('d-M-Y h:m:s A');
+            ->editColumn('created_at', function(CFSubmission $submission) {
+                return $submission->created_at->format('d-M-Y h:m:s A');
             })
-            ->addColumn('action', function(User $user) {
-                return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="' . route('admin-user-profile', $user->username) . '" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="View User Details"><i class="fas fa-binoculars"></i></a><a href="#" class="btn btn-info" id="retrieve-submission" data-toggle="tooltip" data-placement="top" data-userid="' . $user->id . '" title="Retrieve solution"><i class="fas fa-sync-alt"></i></a></div>';
+            ->addColumn('action', function(CFSubmission $submission) {
+                return '<a href="https://codeforces.com/contest/' . $submission->contest_id . '/submission/' . $submission->submission_id . '" class="btn btn-secondary btn-sm" target="_blank">View Submission</a>';
             })
-            ->rawColumns(['action']);
+            ->rawColumns(['problem_title', 'action']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\User $model
+     * @param \App\CFSubmission $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model)
+    public function query(CFSubmission $model)
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('user_id', $this->user_id);
     }
 
     /**
@@ -52,7 +52,7 @@ class UserDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('user-table')
+                    ->setTableId('cfsubmission-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -73,13 +73,11 @@ class UserDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('username'),
-            Column::make('name'),
-            Column::make('email'),
-            Column::make('cf_handle'),
-            Column::make('institution'),
+            Column::make('submission_id'),
+            Column::make('contest_id'),
+            Column::make('problem_index'),
+            Column::make('problem_title'),
             Column::make('created_at'),
-            Column::make('updated_at'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
@@ -94,6 +92,6 @@ class UserDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'User_' . date('YmdHis');
+        return 'CFSubmission_' . date('YmdHis');
     }
 }

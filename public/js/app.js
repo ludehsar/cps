@@ -87832,11 +87832,11 @@ var EditProfile = /*#__PURE__*/function (_React$Component) {
         institution: _this.state.institution,
         new_password: _this.state.new_password,
         password_confirmation: _this.state.confirm_password
-      }).then(function () {
+      }).then(function (res) {
         Swal.fire({
           icon: 'success',
           title: 'Your profile has been saved',
-          text: 'Your cf submissions will be fetched within 5 minutes.',
+          text: res.data,
           showConfirmButton: false,
           timer: 3000
         });
@@ -87891,7 +87891,7 @@ var EditProfile = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "container mt-5"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "row justify-content-center"
@@ -88030,7 +88030,7 @@ var EditProfile = /*#__PURE__*/function (_React$Component) {
         className: "btn btn-default",
         disabled: !this.state.can_submit,
         onClick: this.submitForm
-      }, "Save"))))))))));
+      }, "Save")))))))));
     }
   }]);
 

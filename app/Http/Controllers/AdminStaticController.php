@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\DataTables\LadderDataTable;
 use App\Models\Ladder;
+use App\Models\User;
 use App\DataTables\LadderProblemDataTable;
 use App\DataTables\UserDataTable;
+use App\DataTables\CFSubmissionDataTable;
 
 class AdminStaticController extends Controller
 {
@@ -60,5 +62,16 @@ class AdminStaticController extends Controller
     public function showUsersList(UserDataTable $datatable)
     {
         return $datatable->render('admin.user.lists');
+    }
+
+    public function showUserProfile(CFSubmissionDataTable $datatable, $username)
+    {
+        $user = User::where('username', $username)->first();
+
+        if ($user == null) {
+            return abort(404);
+        }
+
+        return $datatable->with('user_id', $user->id)->render('admin.user.profile', compact('user'));
     }
 }

@@ -123,11 +123,11 @@ class EditProfile extends React.Component {
             institution: this.state.institution,
             new_password: this.state.new_password,
             password_confirmation: this.state.confirm_password,
-        }).then(() => {
+        }).then((res) => {
             Swal.fire({
                 icon: 'success',
                 title: 'Your profile has been saved',
-                text: 'Your cf submissions will be fetched within 5 minutes.',
+                text: res.data,
                 showConfirmButton: false,
                 timer: 3000
             });
@@ -143,82 +143,79 @@ class EditProfile extends React.Component {
 
     render() {
         return (
-            <div>
-                <div></div>
-                <div className="container mt-5">
-                    <div className="row justify-content-center">
-                        <div className="col-md-8">
-                            <div className="card">
-                                <div className="card-header">Edit profile for {this.state.username}</div>
+            <div className="container mt-5">
+                <div className="row justify-content-center">
+                    <div className="col-md-8">
+                        <div className="card">
+                            <div className="card-header">Edit profile for {this.state.username}</div>
 
-                                <div className="card-body">
-                                    <form method="POST" action="#">
+                            <div className="card-body">
+                                <form method="POST" action="#">
 
-                                        <div className="form-group row">
-                                            <label htmlFor="password" className="col-md-3 col-form-label text-md-right">Password <span className="text-red">*</span></label>
+                                    <div className="form-group row">
+                                        <label htmlFor="password" className="col-md-3 col-form-label text-md-right">Password <span className="text-red">*</span></label>
 
-                                            <div className="col-md-8">
-                                                <input id="password" type="password" className="form-control" name="password" onChange={this.handleCurrentPasswordChange} required autoComplete="password" autoFocus />
-                                            </div>
+                                        <div className="col-md-8">
+                                            <input id="password" type="password" className="form-control" name="password" onChange={this.handleCurrentPasswordChange} required autoComplete="password" autoFocus />
                                         </div>
+                                    </div>
 
-                                        <div className="form-group row">
-                                            <label htmlFor="name" className="col-md-3 col-form-label text-md-right">Name <span className="text-red">*</span></label>
+                                    <div className="form-group row">
+                                        <label htmlFor="name" className="col-md-3 col-form-label text-md-right">Name <span className="text-red">*</span></label>
 
-                                            <div className="col-md-8">
-                                                <input id="name" type="text" className="form-control" defaultValue={this.state.name} name="name" onChange={this.handleNameChange} required autoComplete="name" />
-                                            </div>
+                                        <div className="col-md-8">
+                                            <input id="name" type="text" className="form-control" defaultValue={this.state.name} name="name" onChange={this.handleNameChange} required autoComplete="name" />
                                         </div>
+                                    </div>
 
-                                        <div className="form-group row">
-                                            <label htmlFor="email" className="col-md-3 col-form-label text-md-right">Email Address <span className="text-red">*</span></label>
+                                    <div className="form-group row">
+                                        <label htmlFor="email" className="col-md-3 col-form-label text-md-right">Email Address <span className="text-red">*</span></label>
 
-                                            <div className="col-md-8">
-                                                <input id="email" type="email" className="form-control" defaultValue={this.state.email} name="email" onChange={this.handleEmailChange} required autoComplete="email" />
-                                            </div>
+                                        <div className="col-md-8">
+                                            <input id="email" type="email" className="form-control" defaultValue={this.state.email} name="email" onChange={this.handleEmailChange} required autoComplete="email" />
                                         </div>
+                                    </div>
 
-                                        <div className="form-group row">
-                                            <label htmlFor="cf-handle" className="col-md-3 col-form-label text-md-right">CF Handle <span className="text-red">*</span></label>
+                                    <div className="form-group row">
+                                        <label htmlFor="cf-handle" className="col-md-3 col-form-label text-md-right">CF Handle <span className="text-red">*</span></label>
 
-                                            <div className="col-md-8">
-                                                <input id="cf-handle" type="text" className="form-control" defaultValue={this.state.cf_handle} name="cf_handle" onChange={this.handleCFHandleChange} required autoComplete="codeforces-handle" />
-                                            </div>
+                                        <div className="col-md-8">
+                                            <input id="cf-handle" type="text" className="form-control" defaultValue={this.state.cf_handle} name="cf_handle" onChange={this.handleCFHandleChange} required autoComplete="codeforces-handle" />
                                         </div>
+                                    </div>
 
-                                        <div className="form-group row">
-                                            <label htmlFor="institution" className="col-md-3 col-form-label text-md-right">Institution</label>
+                                    <div className="form-group row">
+                                        <label htmlFor="institution" className="col-md-3 col-form-label text-md-right">Institution</label>
 
-                                            <div className="col-md-8">
-                                                <input id="institution" type="text" className="form-control" defaultValue={this.state.institution} name="institution" onChange={this.handleInstitutionChange} autoComplete="institution" />
-                                            </div>
+                                        <div className="col-md-8">
+                                            <input id="institution" type="text" className="form-control" defaultValue={this.state.institution} name="institution" onChange={this.handleInstitutionChange} autoComplete="institution" />
                                         </div>
+                                    </div>
 
-                                        <div className="form-group row">
-                                            <label htmlFor="new-password" className="col-md-3 col-form-label text-md-right">New Password</label>
+                                    <div className="form-group row">
+                                        <label htmlFor="new-password" className="col-md-3 col-form-label text-md-right">New Password</label>
 
-                                            <div className="col-md-8">
-                                                <input id="new-password" type="password" className="form-control" name="new_password" onChange={this.handleNewPasswordChange} autoComplete="new-password" />
-                                            </div>
+                                        <div className="col-md-8">
+                                            <input id="new-password" type="password" className="form-control" name="new_password" onChange={this.handleNewPasswordChange} autoComplete="new-password" />
                                         </div>
+                                    </div>
 
-                                        <div className="form-group row">
-                                            <label htmlFor="confirm-password" className="col-md-3 col-form-label text-md-right">Confirm Password</label>
+                                    <div className="form-group row">
+                                        <label htmlFor="confirm-password" className="col-md-3 col-form-label text-md-right">Confirm Password</label>
 
-                                            <div className="col-md-8">
-                                                <input id="confirm-password" type="password" className="form-control" name="password_confirmation" onChange={this.handleConfirmPasswordChange} autoComplete="confirm-password" />
-                                            </div>
+                                        <div className="col-md-8">
+                                            <input id="confirm-password" type="password" className="form-control" name="password_confirmation" onChange={this.handleConfirmPasswordChange} autoComplete="confirm-password" />
                                         </div>
+                                    </div>
 
-                                        <div className="form-group row mb-0">
-                                            <div className="col-md-8 offset-md-3">
-                                                <button type="submit" className="btn btn-default" disabled={!this.state.can_submit} onClick={this.submitForm}>
-                                                    Save
-                                                </button>
-                                            </div>
+                                    <div className="form-group row mb-0">
+                                        <div className="col-md-8 offset-md-3">
+                                            <button type="submit" className="btn btn-default" disabled={!this.state.can_submit} onClick={this.submitForm}>
+                                                Save
+                                            </button>
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
