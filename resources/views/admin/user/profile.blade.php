@@ -48,7 +48,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($ladders as $ladder)
+                        @foreach ($ladders as $key => $ladder)
                             <tr>
                                 <th scope="row">
                                     {{ $ladder->id }}
@@ -64,10 +64,10 @@
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <span class="mr-2">60%</span>
+                                        <span class="mr-2">{{ $progresses[$key] }}%</span>
                                         <div>
                                             <div class="progress">
-                                                <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                                                <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="{{ $progresses[$key] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $progresses[$key] }}%;"></div>
                                             </div>
                                         </div>
                                     </div>

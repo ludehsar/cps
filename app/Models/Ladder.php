@@ -21,4 +21,12 @@ class Ladder extends Model
     protected $fillable = [
         'ladder_name', 'ladder_description', 'ladder_difficulty',
     ];
+
+    /**
+     * Get the problems for the ladder.
+     */
+    public function problems()
+    {
+        return $this->hasMany('App\Models\LadderProblem');
+    }
 }

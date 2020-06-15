@@ -22,7 +22,7 @@ class CFSubmissionDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('problem_title', function(CFSubmission $submission) {
-                return '<a href="https://codeforces.com/contest/' . $submission->contest_id . '/problem/' . $submission->problem_index . '" style="text-decoration: inherit; color: inherit;" target="_blank">' . $submission->problem_title . '</a>';
+                return '<a href="' . $submission->problem_url . '" style="text-decoration: inherit; color: inherit;" target="_blank">' . $submission->problem_title . '</a>';
             })
             ->editColumn('created_at', function(CFSubmission $submission) {
                 return $submission->created_at->format('d-M-Y h:m:s A');

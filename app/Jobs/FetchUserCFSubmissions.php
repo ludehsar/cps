@@ -55,6 +55,7 @@ class FetchUserCFSubmissions implements ShouldQueue
                         'contest_id' => $submission->contestId,
                         'problem_index' => $submission->problem->index,
                         'problem_title' => $submission->problem->name,
+                        'problem_url' => 'https://codeforces.com/problemset/problem/' . $submission->contestId . '/' . $submission->problem->index,
                     ]);
                 }
             }

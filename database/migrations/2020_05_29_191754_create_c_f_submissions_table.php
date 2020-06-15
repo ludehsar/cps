@@ -20,6 +20,7 @@ class CreateCFSubmissionsTable extends Migration
             $table->string('contest_id');
             $table->string('problem_index');
             $table->string('problem_title');
+            $table->string('problem_url');
             $table->timestamps();
         });
     }

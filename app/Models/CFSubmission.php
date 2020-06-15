@@ -19,6 +19,6 @@ class CFSubmission extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'submission_id', 'contest_id', 'problem_index', 'problem_title'
+        'user_id', 'submission_id', 'contest_id', 'problem_index', 'problem_title', 'problem_url',
     ];
 }

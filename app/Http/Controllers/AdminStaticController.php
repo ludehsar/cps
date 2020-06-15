@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\DataTables\LadderDataTable;
 use App\Models\Ladder;
 use App\Models\User;
+use App\Models\CFSubmission;
+use App\Models\LadderProblem;
 use App\DataTables\LadderProblemDataTable;
 use App\DataTables\UserDataTable;
 use App\DataTables\CFSubmissionDataTable;
+use Illuminate\Support\Facades\DB;
 
 class AdminStaticController extends Controller
 {
@@ -74,7 +77,22 @@ class AdminStaticController extends Controller
 
         $ladders = Ladder::all();
 
-        return $datatable->with('user_id', $user->id)->render('admin.user.profile', compact('user', 'ladders'));
+        $progresses = array();
+
+        foreach ($ladders as $ladder) {
+            $ladderCnt = $ladder->problems->count();
+            $solvedCnt = DB::table('c_f_submissions')
+                                ->join('ladder_problems', function($join) use($user, $ladder) {
+                                    $join->on('c_f_submissions.problem_url', '=', 'ladder_problems.problem_url')
+                                            ->where('c_f_submissions.user_id', $user->id)
+                                            ->where('ladder_problems.ladder_id', $ladder->id);
+                                })->count();
+
+            if ($ladderCnt == 0) array_push($progresses, 100.0);
+            else array_push($progresses, round(($solvedCnt * 100.0 / $ladderCnt), 2));
+        }
+
+        return $datatable->with('user_id', $user->id)->render('admin.user.profile', compact('user', 'ladders', 'progresses'));
     }
 
     public function showNewUserForm()
