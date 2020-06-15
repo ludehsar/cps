@@ -7,11 +7,17 @@ class UserProfile extends React.Component {
 
         this.state = {
             username: '',
+            invalid_cfhandle: true,
             name: '',
             email: '',
             cf_handle: '',
             institution: '',
             can_submit: false,
+            rating: 0,
+            maxRating: 0,
+            maxRank: '',
+            profilePicUrl: '',
+            handle: '',
         }
     }
 
@@ -26,11 +32,26 @@ class UserProfile extends React.Component {
                 name: res.data.name,
                 email: res.data.email,
                 cf_handle: res.data.cf_handle,
-                institution: res.data.institution
+                institution: res.data.institution,
+                invalid_cfhandle: res.data.invalid_cf_handle,
             }, () => {
                 this.checkCanSubmit();
+                this.getCFInfo();
             });
         });
+    }
+
+    getCFInfo = () => {
+        fetch('https://codeforces.com/api/user.info?handles=' + this.state.cf_handle)
+            .then(res => res.json()).then((data) => {
+                this.setState({
+                    rating: data.result[0].rating,
+                    maxRating: data.result[0].maxRating,
+                    maxRank: data.result[0].maxRank,
+                    profilePicUrl: data.result[0].titlePhoto,
+                    handle: data.result[0].handle,
+                });
+            });
     }
 
     checkCanSubmit = () => {
@@ -114,7 +135,7 @@ class UserProfile extends React.Component {
                         <div className="row justify-content-center">
                             <div className="col-lg-3 order-lg-2">
                                 <div className="card-profile-image">
-                                    <img src="//userpic.codeforces.com/518078/title/14587a4cfab6d171.jpg" className="rounded-circle" />
+                                    <img src={this.state.profilePicUrl} className="rounded-circle" />
                                 </div>
                             </div>
                         </div>
@@ -123,11 +144,11 @@ class UserProfile extends React.Component {
                                 <div className="col">
                                     <div className="card-profile-stats d-flex justify-content-center">
                                         <div>
-                                            <span className="heading">22</span>
+                                            <span className="heading">{this.state.maxRating}</span>
                                             <span className="description">Max Rating</span>
                                         </div>
                                         <div>
-                                            <span className="heading">10</span>
+                                            <span className="heading">{this.state.rating}</span>
                                             <span className="description">Current Rating</span>
                                         </div>
                                     </div>
@@ -135,10 +156,9 @@ class UserProfile extends React.Component {
                             </div>
                             <div className="text-center">
                                 <h5 className="h3">
-                                    Rashedul_Alam
+                                    {(this.state.handle == '' ? this.state.cf_handle : this.state.handle)}
                                 </h5>
-                                <div className="h5 font-weight-300">Expert</div>
-                                <div>{this.state.institution}</div>
+                                <div className="h4 font-weight-300 text-uppercase">{this.state.maxRank}</div>
                             </div>
                         </div>
                     </div>

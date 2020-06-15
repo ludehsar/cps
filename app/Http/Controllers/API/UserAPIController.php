@@ -119,8 +119,6 @@ class UserAPIController extends Controller
 
         $user->save();
 
-        $this->fetchUserCFSubmission($user->id);
-
         return response(($changedCFHandle ? 'Codeforces submission will be updated within 5 minutes.' : ''), 200);
     }
 }

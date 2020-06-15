@@ -88358,9 +88358,26 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
           name: res.data.name,
           email: res.data.email,
           cf_handle: res.data.cf_handle,
-          institution: res.data.institution
+          institution: res.data.institution,
+          invalid_cfhandle: res.data.invalid_cf_handle
         }, function () {
           _this.checkCanSubmit();
+
+          _this.getCFInfo();
+        });
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "getCFInfo", function () {
+      fetch('https://codeforces.com/api/user.info?handles=' + _this.state.cf_handle).then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        _this.setState({
+          rating: data.result[0].rating,
+          maxRating: data.result[0].maxRating,
+          maxRank: data.result[0].maxRank,
+          profilePicUrl: data.result[0].titlePhoto,
+          handle: data.result[0].handle
         });
       });
     });
@@ -88436,11 +88453,17 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
 
     _this.state = {
       username: '',
+      invalid_cfhandle: true,
       name: '',
       email: '',
       cf_handle: '',
       institution: '',
-      can_submit: false
+      can_submit: false,
+      rating: 0,
+      maxRating: 0,
+      maxRank: '',
+      profilePicUrl: '',
+      handle: ''
     };
     return _this;
   }
@@ -88489,7 +88512,7 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "card-profile-image"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
-        src: "//userpic.codeforces.com/518078/title/14587a4cfab6d171.jpg",
+        src: this.state.profilePicUrl,
         className: "rounded-circle"
       })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "card-body pt-5"
@@ -88501,19 +88524,19 @@ var UserProfile = /*#__PURE__*/function (_React$Component) {
         className: "card-profile-stats d-flex justify-content-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
         className: "heading"
-      }, "22"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+      }, this.state.maxRating), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
         className: "description"
       }, "Max Rating")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
         className: "heading"
-      }, "10"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+      }, this.state.rating), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
         className: "description"
       }, "Current Rating"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "text-center"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h5", {
         className: "h3"
-      }, "Rashedul_Alam"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "h5 font-weight-300"
-      }, "Expert"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, this.state.institution))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, this.state.handle == '' ? this.state.cf_handle : this.state.handle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "h4 font-weight-300 text-uppercase"
+      }, this.state.maxRank))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "col-xl-8 order-xl-1"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "card"
