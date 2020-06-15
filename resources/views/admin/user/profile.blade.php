@@ -11,8 +11,8 @@
                 <div class="col-lg-7 col-md-10">
                     <h1 class="display-2 text-white">{{ $user->name }}</h1>
                     <p class="text-white mt-0 mb-5">This is the user's profile page. You can see the progress he / she has made and manage and instruct them to do their job</p>
-                    <a href="#" class="btn btn-neutral" id="retrieve-submission-btn">Retrieve Submission</a>
-                    <a href="#" class="btn btn-danger" id="delete-profile-btn">Delete profile</a>
+                    <a href="javascript:void(0)" class="btn btn-neutral" id="retrieve-submission-btn">Retrieve Submission</a>
+                    <a href="javascript:void(0)" class="btn btn-danger" id="delete-profile-btn">Delete profile</a>
                     <form id="delete-user-form" action="{{ route('admin-user-delete', $user->id) }}" method="POST" style="display: none;">
                         @csrf
                     </form>
