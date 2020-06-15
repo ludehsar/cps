@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::post('/users/new', 'UserController@createNewUser')->name('create-user');
     Route::post('/users/delete/{id}', 'UserController@deleteUser')->name('admin-user-delete');
     Route::get('/user/{username}', 'AdminStaticController@showUserProfile')->name('admin-user-profile');
+    Route::get('/users/{userId}/ladder/{ladderId}', 'AdminStaticController@showUserLadderProgress')->name('admin-user-ladder-progress');
 });
 
 Route::group(['middleware' => 'auth'], function() {

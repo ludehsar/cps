@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\CFSubmission;
 use App\Models\LadderProblem;
 use App\DataTables\LadderProblemDataTable;
+use App\DataTables\UserLadderProblemDataTable;
 use App\DataTables\UserDataTable;
 use App\DataTables\CFSubmissionDataTable;
 use Illuminate\Support\Facades\DB;
@@ -98,5 +99,17 @@ class AdminStaticController extends Controller
     public function showNewUserForm()
     {
         return view('admin.user.create');
+    }
+
+    public function showUserLadderProgress(UserLadderProblemDataTable $datatable, $userId, $ladderId)
+    {
+        $ladder = Ladder::find($ladderId);
+        $user = User::find($userId);
+
+        if ($ladder == null || $user == null) {
+            return abort(404);
+        }
+
+        return $datatable->with('ladderId', $ladder->id)->with('userId', $user->id)->render('admin.user.problem-lists', compact('ladder', 'user'));
     }
 }

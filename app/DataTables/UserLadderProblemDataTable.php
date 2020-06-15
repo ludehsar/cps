@@ -3,13 +3,14 @@
 namespace App\DataTables;
 
 use App\Models\LadderProblem;
+use App\Models\CFSubmission;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class LadderProblemDataTable extends DataTable
+class UserLadderProblemDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -28,7 +29,20 @@ class LadderProblemDataTable extends DataTable
                 return $problem->created_at->format('d-M-Y h:m:s A');
             })
             ->addColumn('action', function(LadderProblem $problem) {
-                return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="' . $problem->problem_url . '" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Go to the problem" target="_blank"><i class="fas fa-external-link-alt"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete The Problem"><i class="fas fa-trash"></i></a></div>';
+                $submission = CFSubmission::where('user_id', $this->userId)->where('problem_url', $problem->problem_url)->first();
+
+                if ($submission) {
+                    return '<a href="https://codeforces.com/contest/' . $submission->contest_id . '/submission/' . $submission->submission_id . '" class="btn btn-secondary btn-sm" target="_blank">View Submission</a>';
+                }
+                else {
+                    return '<a href="' . $problem->problem_url . '" class="btn btn-neutral btn-sm" data-toggle="tooltip" data-placement="top" title="Go to the problem" target="_blank"><i class="fas fa-external-link-alt"></i></a>';
+                }
+            })
+            ->setRowClass(function(LadderProblem $problem) {
+                $submission = CFSubmission::where('user_id', $this->userId)->where('problem_url', $problem->problem_url)->first();
+
+                if ($submission) return 'accepted-submission';
+                return '';
             })
             ->rawColumns(['problem_title', 'action']);
     }
@@ -52,11 +66,12 @@ class LadderProblemDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('ladderproblem-table')
+                    ->setTableId('LadderProblemdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
                     ->orderBy(1)
+                    ->pageLength(100)
                     ->buttons(
                         Button::make('print'),
                         Button::make('reset'),

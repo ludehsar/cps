@@ -74,7 +74,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <a href="#" class="btn btn-sm btn-default">View Details</a>
+                                        <a href="{{ route('admin-user-ladder-progress', [$user->id, $ladder->id]) }}" class="btn btn-sm btn-default">View Details</a>
                                     </div>
                                 </td>
                             </tr>

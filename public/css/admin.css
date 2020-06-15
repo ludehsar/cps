@@ -40745,3 +40745,8 @@ input.datetimepicker[data-color='yellow'] + .bootstrap-datetimepicker-widget.dro
   color: gray;
 }
 
+.accepted-submission {
+  background-color: greenyellow;
+  color: black;
+}
+

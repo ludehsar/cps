@@ -39,10 +39,12 @@ class PopulateLadderProblems extends Command
     public function handle()
     {
         DB::unprepared(file_get_contents('Ladders.sql'));
-        $this->info('Ladders generated successfully.');
+        $this->info('Ladders have been generated successfully.');
         DB::unprepared(file_get_contents('Ladder1Problems.sql'));
+        $this->info('Ladder 1 problems have been generated successfully.');
         DB::unprepared(file_get_contents('Ladder2Problems.sql'));
+        $this->info('Ladder 2 problems have been generated successfully.');
         DB::unprepared(file_get_contents('Ladder3Problems.sql'));
-        $this->info('All the ladder problems have been generated successfully.');
+        $this->info('Ladder 3 problems have been generated successfully.');
     }
 }
