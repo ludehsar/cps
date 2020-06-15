@@ -7,10 +7,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserSettingsRequest;
 use Illuminate\Support\Facades\Hash;
-use App\Jobs\FetchUserCFSubmissions;
+use App\Http\Traits\FetchCFSubmissionTrait;
 
 class UserAPIController extends Controller
 {
+    use FetchCFSubmissionTrait;
+    
     /**
      * Create a new controller instance.
      *
@@ -68,20 +70,6 @@ class UserAPIController extends Controller
         $user->save();
 
         return response(($changedCFHandle ? 'Codeforces submission will be updated within 5 minutes.' : ''), 200);
-    }
-
-    public function fetchUserCFSubmission($id)
-    {
-        $user = User::find($id);
-
-        if ($user == null) {
-            return response('Such user does not exist.', 404);
-        }
-
-        // Fetches user cf submissions
-        FetchUserCFSubmissions::dispatch($user);
-
-        return response('Codeforces submission will be updated within 5 minutes.', 200);
     }
     
     public function changeProfileDataAsAdmin(Request $request, $id)

@@ -74,4 +74,9 @@ class AdminStaticController extends Controller
 
         return $datatable->with('user_id', $user->id)->render('admin.user.profile', compact('user'));
     }
+
+    public function showNewUserForm()
+    {
+        return view('admin.user.create');
+    }
 }
