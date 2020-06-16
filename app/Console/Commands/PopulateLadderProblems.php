@@ -38,29 +38,29 @@ class PopulateLadderProblems extends Command
      */
     public function handle()
     {
-        DB::unprepared(file_get_contents('Ladders.sql'));
+        DB::unprepared(file_get_contents('Ladders.psql'));
         $this->info('Ladders have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder1Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder1Problems.psql'));
         $this->info('Ladder 1 problems have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder2Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder2Problems.psql'));
         $this->info('Ladder 2 problems have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder3Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder3Problems.psql'));
         $this->info('Ladder 3 problems have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder4Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder4Problems.psql'));
         $this->info('Ladder 4 problems have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder5Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder5Problems.psql'));
         $this->info('Ladder 5 problems have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder6Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder6Problems.psql'));
         $this->info('Ladder 6 problems have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder7Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder7Problems.psql'));
         $this->info('Ladder 7 problems have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder8Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder8Problems.psql'));
         $this->info('Ladder 8 problems have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder9Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder9Problems.psql'));
         $this->info('Ladder 9 problems have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder10Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder10Problems.psql'));
         $this->info('Ladder 10 problems have been generated successfully.');
-        DB::unprepared(file_get_contents('Ladder11Problems.sql'));
+        DB::unprepared(file_get_contents('Ladder11Problems.psql'));
         $this->info('Ladder 11 problems have been generated successfully.');
     }
 }
