@@ -38,7 +38,7 @@ class MakeAdmin extends Command
      */
     public function handle()
     {
-        DB::unprepared(file_get_contents('admins.psql'));
+        DB::unprepared(file_get_contents('admins.sql'));
         $this->info('Admins have been populated successfully.');
     }
 }

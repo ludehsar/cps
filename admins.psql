@@ -1,3 +1,0 @@
-UPDATE users SET is_admin = true WHERE username = 'Rashedul_Alam';
-UPDATE users SET is_admin = true WHERE username = 'farhancdr';
-UPDATE users SET is_admin = true WHERE username = 'Muhammad';
