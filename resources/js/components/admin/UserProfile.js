@@ -218,7 +218,7 @@ class UserProfile extends React.Component {
                                 <h5 className={"h3 " + this.state.handleClassName}>
                                     {(this.state.handle == '' ? this.state.cf_handle : this.state.handle)}
                                 </h5>
-                                <div className="h4 font-weight-300 text-uppercase">{this.state.maxRank}</div>
+                                <div className="h4 font-weight-300 text-uppercase">{this.state.rank}</div>
                             </div>
                         </div>
                     </div>

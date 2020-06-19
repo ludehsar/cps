@@ -73,6 +73,11 @@
                         <a href="../examples/register.html" class="dropdown-item">Register</a>
                     </div>
                 </li>
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('ladders') }}">Ladders</a>
+                    </li>
+                @endauth
                 @if (!Auth::guest() && Auth::user()->is_admin)
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('dashboard') }}">Admin Dashboard</a>
@@ -84,7 +89,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">Login</a>
                 </li>
-                <li class="nav-item d-none d-lg-block ml-lg-4">
+                <li class="nav-item ml-lg-4">
                     <a href="{{ route('register') }}" class="btn btn-neutral btn-icon">
                         <span class="btn-inner--icon">
                             <i class="fas fa-address-book"></i>
