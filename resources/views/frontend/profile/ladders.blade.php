@@ -8,7 +8,10 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">Ladder Progress</h3>
+                            <h3 class="mb-0 float-left">Ladder Progress</h3>
+                            <div class="float-right">
+                                <a href="javascript:void(0)" class="btn btn-default" id="retrieve-submission-btn">Retrieve Submission</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -70,5 +73,30 @@
             </div>
         </div>
     </div>
+    <div class="h5 mt-3 mb-5 text-red">
+        <span>*</span> All the ladders and ladder problems have been fetched from <a href="https://www.a2oj.com/" target="_blank">A2OJ</a>.
+    </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $('#retrieve-submission-btn').click(function() {
+            axios.post('/api/fetch-cf-submission/' + {{ Auth::user()->id }}).then((res) => {
+                Swal.fire({
+                    position: 'bottom-end',
+                    text: res.data,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            }).catch((err) => {
+                Swal.fire({
+                    position: 'bottom-end',
+                    text: err.data,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+        });
+    </script>
+@endpush
