@@ -95,6 +95,18 @@ class UserLadderProblemDataTable extends DataTable
      */
     protected function getColumns()
     {
+        if ($this->forUserOnly && $this->forUserOnly == true) {
+            return [
+                Column::make('id'),
+                Column::make('problem_title'),
+                Column::make('online_judge'),
+                Column::make('problem_difficulty'),
+                Column::computed('action')
+                        ->exportable(false)
+                        ->printable(false)
+                        ->addClass('text-center'),
+            ];
+        }
         return [
             Column::make('id'),
             Column::make('ladder_id')
