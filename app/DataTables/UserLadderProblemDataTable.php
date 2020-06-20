@@ -65,15 +65,22 @@ class UserLadderProblemDataTable extends DataTable
      */
     public function html()
     {
+        if ($this->forUserOnly && $this->forUserOnly == true) {
+            return $this->builder()
+                    ->setTableId('LadderProblemdatatable-table')
+                    ->columns($this->getColumns())
+                    ->minifiedAjax()
+                    ->dom('frtip')
+                    ->orderBy(1)
+                    ->paging(false);
+        }
         return $this->builder()
                     ->setTableId('LadderProblemdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
                     ->orderBy(1)
-                    ->languagePaginatePrevious('<i class="fas fa-angle-left"></i><span class="sr-only">Previous</span>')
-                    ->languagePaginateNext('<i class="fas fa-angle-right"></i><span class="sr-only">Next</span>')
-                    ->pageLength(100)
+                    ->paging(false)
                     ->buttons(
                         Button::make('print'),
                         Button::make('reset'),

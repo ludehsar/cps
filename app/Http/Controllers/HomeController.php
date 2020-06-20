@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ladder;
 use Illuminate\Support\Facades\DB;
+use App\DataTables\UserLadderProblemDataTable;
 
 class HomeController extends Controller
 {
@@ -58,5 +59,17 @@ class HomeController extends Controller
         }
 
         return view('frontend.profile.ladders', compact('ladders', 'progresses'));
+    }
+
+    public function showLadderProgress(UserLadderProblemDataTable $datatable, $ladderId)
+    {
+        $ladder = Ladder::find($ladderId);
+        $user = auth('web')->user();
+
+        if ($ladder == null) {
+            return abort(404);
+        }
+
+        return $datatable->with('ladderId', $ladder->id)->with('userId', $user->id)->with('forUserOnly', true)->render('frontend.profile.ladder-problems', compact('ladder'));
     }
 }
