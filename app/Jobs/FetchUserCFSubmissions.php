@@ -33,9 +33,6 @@ class FetchUserCFSubmissions implements ShouldQueue
      */
     public function handle()
     {
-        // Delete all previous submission in order to remove duplicity
-        CFSubmission::where('user_id', $this->user->id)->delete();
-
         // Requests for all submission
         $client = new Client();
         $res = $client->get('https://codeforces.com/api/user.status?handle=' . $this->user->cf_handle)->getBody();
@@ -47,7 +44,10 @@ class FetchUserCFSubmissions implements ShouldQueue
                 if ($submission->verdict == "OK" && $submission->testset == "TESTS" && isset($submission->contestId)) {
                     $previousSameSubmission = CFSubmission::where('user_id', $this->user->id)->where('contest_id', $submission->contestId)->where('problem_index', $submission->problem->index)->first();
 
-                    if ($previousSameSubmission != null) continue;
+                    if ($previousSameSubmission != null) {
+                        if ($previousSameSubmission->submission_id < $submission->id) $previousSameSubmission->delete();
+                        else continue;
+                    }
 
                     CFSubmission::create([
                         'user_id' => $this->user->id,
