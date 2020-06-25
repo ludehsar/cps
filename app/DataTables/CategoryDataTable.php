@@ -2,14 +2,14 @@
 
 namespace App\DataTables;
 
-use App\Models\LadderProblem;
+use App\Models\Category;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class LadderProblemDataTable extends DataTable
+class CategoryDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,27 +21,26 @@ class LadderProblemDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('problem_title', function(LadderProblem $problem) {
-                return '<a href="' . $problem->problem_url . '" style="text-decoration: inherit; color: inherit;" target="_blank">' . $problem->problem_title . '</a>';
+            ->editColumn('created_at', function(Category $category) {
+                return $category->created_at->format('d-M-Y h:m:s A');
             })
-            ->editColumn('created_at', function(LadderProblem $problem) {
-                return $problem->created_at->format('d-M-Y h:m:s A');
+            ->editColumn('updated_at', function(Category $category) {
+                return $category->updated_at->format('d-M-Y h:m:s A');
             })
-            ->addColumn('action', function(LadderProblem $problem) {
-                return '<div class="btn-group btn-group-sm" role="group" aria-label="Ladder action"><a href="' . $problem->problem_url . '" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Go to the problem" target="_blank"><i class="fas fa-external-link-alt"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete The Problem"><i class="fas fa-trash"></i></a></div>';
-            })
-            ->rawColumns(['problem_title', 'action']);
+            ->addColumn('action', function(Category $category) {
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Category action"><a href="#" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Category"><i class="fas fa-binoculars"></i></a><a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit Category Information"><i class="fas fa-edit"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete The Category"><i class="fas fa-trash"></i></a></div>';
+            });
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\LadderProblem $model
+     * @param \App\Models\Category $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(LadderProblem $model)
+    public function query(Category $model)
     {
-        return $model->newQuery()->where('ladder_id', $this->ladderId);
+        return $model->newQuery();
     }
 
     /**
@@ -52,7 +51,7 @@ class LadderProblemDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('ladderproblem-table')
+                    ->setTableId('category-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -75,12 +74,9 @@ class LadderProblemDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('ladder_id')
-                    ->orderable(false),
-            Column::make('problem_title'),
-            Column::make('online_judge'),
-            Column::make('problem_difficulty'),
+            Column::make('category_name'),
             Column::make('created_at'),
+            Column::make('updated_at'),
             Column::computed('action')
                     ->exportable(false)
                     ->printable(false)
@@ -95,6 +91,6 @@ class LadderProblemDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'LadderProblem_' . date('YmdHis');
+        return 'Category_' . date('YmdHis');
     }
 }

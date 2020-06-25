@@ -39,6 +39,12 @@
                             <span class="nav-link-text">Users</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ (Route::is('admin-category-list')) ? 'active' : '' }}" href="{{ route('admin-category-list') }}">
+                            <i class="ni ni-books text-orange"></i>
+                            <span class="nav-link-text">Categories / Courses</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

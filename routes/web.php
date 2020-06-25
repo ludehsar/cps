@@ -17,18 +17,22 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::get('/', 'AdminStaticController@showDashboard')->name('dashboard');
+    
     Route::get('/ladders', 'AdminStaticController@showLadder')->name('admin-ladder-list');
     Route::get('/ladders/new', 'AdminStaticController@showNewLadderForm')->name('admin-ladder-create-form');
     Route::get('/ladders/edit/{id}', 'AdminStaticController@showEditLadderForm')->name('admin-ladder-edit-form');
     Route::post('/ladders/new', 'LadderController@createNewLadder')->name('create-ladder');
     Route::post('/ladders/edit/{id}', 'LadderController@editLadder')->name('edit-ladder');
     Route::get('/ladder/{id}', 'AdminStaticController@showLadderProblems')->name('admin-ladder-problems');
+    
     Route::get('/users', 'AdminStaticController@showUsersList')->name('admin-user-list');
     Route::get('/users/new', 'AdminStaticController@showNewUserForm')->name('admin-user-create-form');
     Route::post('/users/new', 'UserController@createNewUser')->name('create-user');
     Route::post('/users/delete/{id}', 'UserController@deleteUser')->name('admin-user-delete');
     Route::get('/user/{username}', 'AdminStaticController@showUserProfile')->name('admin-user-profile');
     Route::get('/users/{userId}/ladder/{ladderId}', 'AdminStaticController@showUserLadderProgress')->name('admin-user-ladder-progress');
+    
+    Route::get('/categories', 'AdminStaticController@showCategories')->name('admin-category-list');
 });
 
 Route::group(['middleware' => 'auth'], function() {

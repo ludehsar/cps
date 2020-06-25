@@ -71,7 +71,7 @@ class UserLadderProblemDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('frtip')
-                    ->orderBy(1)
+                    ->orderBy(0, 'asc')
                     ->paging(false);
         }
         return $this->builder()
@@ -79,7 +79,7 @@ class UserLadderProblemDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0, 'asc')
                     ->paging(false)
                     ->buttons(
                         Button::make('print'),

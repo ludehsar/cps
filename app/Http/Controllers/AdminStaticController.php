@@ -12,6 +12,7 @@ use App\DataTables\LadderProblemDataTable;
 use App\DataTables\UserLadderProblemDataTable;
 use App\DataTables\UserDataTable;
 use App\DataTables\CFSubmissionDataTable;
+use App\DataTables\CategoryDataTable;
 use Illuminate\Support\Facades\DB;
 
 class AdminStaticController extends Controller
@@ -111,5 +112,10 @@ class AdminStaticController extends Controller
         }
 
         return $datatable->with('ladderId', $ladder->id)->with('userId', $user->id)->render('admin.user.problem-lists', compact('ladder', 'user'));
+    }
+
+    public function showCategories(CategoryDataTable $datatable)
+    {
+        return $datatable->render('admin.category.lists');
     }
 }

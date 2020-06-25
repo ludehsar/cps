@@ -56,7 +56,7 @@ class CFSubmissionDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(1, 'desc')
                     ->languagePaginatePrevious('<i class="fas fa-angle-left"></i><span class="sr-only">Previous</span>')
                     ->languagePaginateNext('<i class="fas fa-angle-right"></i><span class="sr-only">Next</span>')
                     ->buttons(
