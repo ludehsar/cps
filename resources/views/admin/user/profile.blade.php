@@ -15,6 +15,7 @@
                     <a href="javascript:void(0)" class="btn btn-danger" id="delete-profile-btn">Delete Profile</a>
                     <form id="delete-user-form" action="{{ route('admin-user-delete', $user->id) }}" method="POST" style="display: none;">
                         @csrf
+                        @method('delete')
                     </form>
                 </div>
             </div>

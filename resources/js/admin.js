@@ -15,3 +15,4 @@ require('./argon-dashboard');
  */
 
 require('./components/admin/UserProfile');
+require('./components/admin/NewOrEditCategory');

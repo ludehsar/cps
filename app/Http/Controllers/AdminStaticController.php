@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\DataTables\LadderDataTable;
 use App\Models\Ladder;
 use App\Models\User;
+use App\Models\Category;
 use App\Models\CFSubmission;
 use App\Models\LadderProblem;
 use App\DataTables\LadderProblemDataTable;
@@ -117,5 +118,21 @@ class AdminStaticController extends Controller
     public function showCategories(CategoryDataTable $datatable)
     {
         return $datatable->render('admin.category.lists');
+    }
+
+    public function showNewCategoryForm()
+    {
+        return view('admin.category.create');
+    }
+
+    public function showEditCategoryForm($id)
+    {
+        $category = Category::find($id);
+
+        if ($category == null) {
+            return abort(404);
+        }
+
+        return view('admin.category.edit', compact('category'));
     }
 }

@@ -40,6 +40,7 @@
                 </div>
                 <div class="card-body">
                     @csrf
+                    @method('patch')
                     <h6 class="heading-small text-muted mb-4">Ladder information</h6>
                     <div class="pl-lg-4">
                         <div class="row">

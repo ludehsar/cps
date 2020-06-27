@@ -33,7 +33,7 @@
                             <h3 class="mb-0">Add A New Ladder </h3>
                         </div>
                         <div class="col-4 text-right">
-                            <button type="submit" class="btn btn-sm btn-primary">Save</a>
+                            <button type="submit" class="btn btn-sm btn-primary">Save</button>
                         </div>
                     </div>
                 </div>
