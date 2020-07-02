@@ -28,7 +28,7 @@ class CategoryDataTable extends DataTable
                 return $category->updated_at->format('d-M-Y h:m:s A');
             })
             ->addColumn('action', function(Category $category) {
-                return '<div class="btn-group btn-group-sm" role="group" aria-label="Category action"><a href="#" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Category"><i class="fas fa-binoculars"></i></a><a href="' . route('admin-edit-category-form', $category->id) . '" class="btn btn-sm btn-primary" id="edit-category" data-toggle="tooltip" data-placement="top" title="Edit Category"><i class="fas fa-edit"></i></a><a href="#" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete Category"><i class="fas fa-trash"></i></a></div>';
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Category action"><a href="#" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Category"><i class="fas fa-binoculars"></i></a><a href="' . route('admin-edit-category-form', $category->id) . '" class="btn btn-sm btn-primary" id="edit-category" data-toggle="tooltip" data-placement="top" title="Edit Category"><i class="fas fa-edit"></i></a><a href="javascript:void(0)" class="btn btn-danger" id="delete-category" data-categoryId="' . $category->id . '" data-toggle="tooltip" data-placement="top" title="Delete Category"><i class="fas fa-trash"></i></a></div>';
             })
             ->rawColumns(['action']);
     }

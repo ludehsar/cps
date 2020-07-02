@@ -41,4 +41,38 @@
 
 @push('scripts')
     {{ $dataTable->scripts() }}
+    <script>
+        $('#category-table').on('click', '#delete-category', function(event) {
+            let categoryId = $(event.currentTarget).data('categoryid');
+
+            Swal.fire({
+                title: 'Do you really want to delete this category?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete this category!'
+                }).then((result) => {
+                if (result.value) {
+                    axios.delete('/api/categories/' + categoryId + '/delete').then((res) => {
+                        Swal.fire(
+                            'Deleted!',
+                            'This category has been deleted.',
+                            'success'
+                        ).then(() => {
+                            window.LaravelDataTables["category-table"].ajax.reload();
+                        });
+                    }).catch((err) => {
+                        Swal.fire({
+                            position: 'bottom-end',
+                            text: err.data,
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    });
+                }
+            });
+        });
+    </script>
 @endpush

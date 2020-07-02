@@ -22,5 +22,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/user/{id}', 'API\UserAPIController@getUser');
         Route::post('/user/change/{id}', 'API\UserAPIController@changeProfileDataAsAdmin');
+
+        Route::delete('/categories/{id}/delete', 'API\CategoryAPIController@deleteCategory');
     });
 });
