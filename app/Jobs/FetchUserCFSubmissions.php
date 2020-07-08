@@ -46,6 +46,12 @@ class FetchUserCFSubmissions implements ShouldQueue
 
                     if ($previousSameSubmission != null) {
                         if ($previousSameSubmission->submission_id < $submission->id) $previousSameSubmission->delete();
+                        else if ($previousSameSubmission->submission_time == null) {
+                            $previousSameSubmission->update([
+                                'submission_time' => $submission->creationTimeSeconds,
+                            ]);
+                            continue;
+                        }
                         else continue;
                     }
 
@@ -55,6 +61,7 @@ class FetchUserCFSubmissions implements ShouldQueue
                         'contest_id' => $submission->contestId,
                         'problem_index' => $submission->problem->index,
                         'problem_title' => $submission->problem->name,
+                        'submission_time' => $submission->creationTimeSeconds,
                         'problem_url' => 'https://codeforces.com/problemset/problem/' . $submission->contestId . '/' . $submission->problem->index,
                     ]);
                 }
