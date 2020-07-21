@@ -23,6 +23,6 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::get('/user/{id}', 'API\UserAPIController@getUser');
         Route::post('/user/change/{id}', 'API\UserAPIController@changeProfileDataAsAdmin');
 
-        Route::delete('/categories/{id}/delete', 'API\CategoryAPIController@deleteCategory');
+        Route::delete('/courses/{id}/delete', 'API\CourseAPIController@deleteCourse');
     });
 });

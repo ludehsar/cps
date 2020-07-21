@@ -4,21 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class ClassTagBridge extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'posts';
-    
+    protected $table = 'class_tag_bridges';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'user_id', 'category_id', 'post_title', 'post_description', 'is_published',
+        'class_id', 'tag_id',
     ];
 }

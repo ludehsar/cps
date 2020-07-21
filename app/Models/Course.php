@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Course extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'categories';
+    protected $table = 'courses';
     
     /**
      * The attributes that are mass assignable.
@@ -19,6 +19,6 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'category_name',
+        'course_name', 'course_description', 'user_id',
     ];
 }

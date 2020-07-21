@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('parent_id')->constrained('comments')->nullable();
-            $table->foreignId('post_id')->constrained();
+            $table->foreignId('class_id')->constrained();
             $table->longText('comment_description');
             $table->timestamps();
         });

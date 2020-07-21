@@ -32,11 +32,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::get('/user/{username}', 'AdminStaticController@showUserProfile')->name('admin-user-profile');
     Route::get('/users/{userId}/ladder/{ladderId}', 'AdminStaticController@showUserLadderProgress')->name('admin-user-ladder-progress');
     
-    Route::get('/categories', 'AdminStaticController@showCategories')->name('admin-category-list');
-    Route::get('/category/new', 'AdminStaticController@showNewCategoryForm')->name('admin-new-category-form');
-    Route::get('/categories/{id}/edit', 'AdminStaticController@showEditCategoryForm')->name('admin-edit-category-form');
-    Route::post('/category/new', 'CategoryController@storeNewCategory')->name('create-category');
-    Route::patch('/categories/{id}/edit', 'CategoryController@editCategory')->name('edit-category');
+    Route::get('/courses', 'AdminStaticController@showCourses')->name('admin-course-list');
+    Route::get('/course/new', 'AdminStaticController@showNewCourseForm')->name('admin-new-course-form');
+    Route::get('/courses/{id}/edit', 'AdminStaticController@showEditCourseForm')->name('admin-edit-course-form');
+    Route::post('/course/new', 'CourseController@storeNewCourse')->name('create-course');
+    Route::patch('/courses/{id}/edit', 'CourseController@editCourse')->name('edit-course');
 });
 
 Route::group(['middleware' => 'auth'], function() {

@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 use App\DataTables\LadderDataTable;
 use App\Models\Ladder;
 use App\Models\User;
-use App\Models\Category;
+use App\Models\Course;
 use App\Models\CFSubmission;
 use App\Models\LadderProblem;
 use App\DataTables\LadderProblemDataTable;
 use App\DataTables\UserLadderProblemDataTable;
 use App\DataTables\UserDataTable;
 use App\DataTables\CFSubmissionDataTable;
-use App\DataTables\CategoryDataTable;
+use App\DataTables\CourseDataTable;
 use Illuminate\Support\Facades\DB;
 
 class AdminStaticController extends Controller
@@ -115,24 +115,24 @@ class AdminStaticController extends Controller
         return $datatable->with('ladderId', $ladder->id)->with('userId', $user->id)->render('admin.user.problem-lists', compact('ladder', 'user'));
     }
 
-    public function showCategories(CategoryDataTable $datatable)
+    public function showCourses(CourseDataTable $datatable)
     {
-        return $datatable->render('admin.category.lists');
+        return $datatable->render('admin.course.lists');
     }
 
-    public function showNewCategoryForm()
+    public function showNewCourseForm()
     {
-        return view('admin.category.create');
+        return view('admin.course.create');
     }
 
-    public function showEditCategoryForm($id)
+    public function showEditCourseForm($id)
     {
-        $category = Category::find($id);
+        $course = Course::find($id);
 
-        if ($category == null) {
+        if ($course == null) {
             return abort(404);
         }
 
-        return view('admin.category.edit', compact('category'));
+        return view('admin.course.edit', compact('course'));
     }
 }

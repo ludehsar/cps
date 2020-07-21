@@ -2,14 +2,15 @@
 
 namespace App\DataTables;
 
-use App\Models\Category;
+use App\Models\Course;
+use App\Models\User;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CategoryDataTable extends DataTable
+class CourseDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,14 +22,18 @@ class CategoryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('created_at', function(Category $category) {
-                return $category->created_at->format('d-M-Y h:m:s A');
+            ->editColumn('created_by', function(Course $course) {
+                $user = User::find($course->user_id);
+                return $user->name;
             })
-            ->editColumn('updated_at', function(Category $category) {
-                return $category->updated_at->format('d-M-Y h:m:s A');
+            ->editColumn('created_at', function(Course $course) {
+                return $course->created_at->format('d-M-Y h:m:s A');
             })
-            ->addColumn('action', function(Category $category) {
-                return '<div class="btn-group btn-group-sm" role="group" aria-label="Category action"><a href="#" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Category"><i class="fas fa-binoculars"></i></a><a href="' . route('admin-edit-category-form', $category->id) . '" class="btn btn-sm btn-primary" id="edit-category" data-toggle="tooltip" data-placement="top" title="Edit Category"><i class="fas fa-edit"></i></a><a href="javascript:void(0)" class="btn btn-danger" id="delete-category" data-categoryId="' . $category->id . '" data-toggle="tooltip" data-placement="top" title="Delete Category"><i class="fas fa-trash"></i></a></div>';
+            ->editColumn('updated_at', function(Course $course) {
+                return $course->updated_at->format('d-M-Y h:m:s A');
+            })
+            ->addColumn('action', function(Course $course) {
+                return '<div class="btn-group btn-group-sm" role="group" aria-label="Course action"><a href="#" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="View Course"><i class="fas fa-binoculars"></i></a><a href="' . route('admin-edit-course-form', $course->id) . '" class="btn btn-sm btn-primary" id="edit-course" data-toggle="tooltip" data-placement="top" title="Edit Course"><i class="fas fa-edit"></i></a><a href="javascript:void(0)" class="btn btn-danger" id="delete-course" data-courseId="' . $course->id . '" data-toggle="tooltip" data-placement="top" title="Delete Course"><i class="fas fa-trash"></i></a></div>';
             })
             ->rawColumns(['action']);
     }
@@ -36,10 +41,10 @@ class CategoryDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Category $model
+     * @param \App\Models\Course $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Category $model)
+    public function query(Course $model)
     {
         return $model->newQuery();
     }
@@ -52,7 +57,7 @@ class CategoryDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('category-table')
+                    ->setTableId('course-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -75,7 +80,8 @@ class CategoryDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('category_name'),
+            Column::make('course_name'),
+            Column::make('created_by'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
@@ -92,6 +98,6 @@ class CategoryDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Category_' . date('YmdHis');
+        return 'Course_' . date('YmdHis');
     }
 }

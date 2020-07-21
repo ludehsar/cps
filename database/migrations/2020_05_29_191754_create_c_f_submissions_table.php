@@ -21,6 +21,7 @@ class CreateCFSubmissionsTable extends Migration
             $table->string('problem_index');
             $table->string('problem_title');
             $table->string('problem_url');
+            $table->integer('submission_time')->nullable();
             $table->timestamps();
         });
     }

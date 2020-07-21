@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSubmissionTimeToCFSubmissionsTable extends Migration
+class CreateCoursesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddSubmissionTimeToCFSubmissionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('c_f_submissions', function (Blueprint $table) {
-            $table->integer('submission_time')->nullable();
+        Schema::create('courses', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->string('course_name');
+            $table->longText('course_description');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class AddSubmissionTimeToCFSubmissionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('c_f_submissions', function (Blueprint $table) {
-            $table->dropColumn('submission_time');
-        });
+        Schema::dropIfExists('categories');
     }
 }

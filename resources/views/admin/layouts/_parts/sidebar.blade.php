@@ -40,9 +40,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ (Route::is('admin-category-list')) ? 'active' : '' }}" href="{{ route('admin-category-list') }}">
+                        <a class="nav-link {{ (Route::is('admin-course-list')) ? 'active' : '' }}" href="{{ route('admin-course-list') }}">
                             <i class="ni ni-books text-orange"></i>
-                            <span class="nav-link-text">Categories / Courses</span>
+                            <span class="nav-link-text">Courses</span>
                         </a>
                     </li>
                 </ul>
