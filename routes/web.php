@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     
     Route::get('/courses', 'AdminStaticController@showCourses')->name('admin-course-list');
     Route::get('/course/new', 'AdminStaticController@showNewCourseForm')->name('admin-new-course-form');
+    Route::get('/courses/{id}', 'AdminStaticController@showCourseClasses')->name('admin-course-classes');
     Route::get('/courses/{id}/edit', 'AdminStaticController@showEditCourseForm')->name('admin-edit-course-form');
     Route::post('/course/new', 'CourseController@storeNewCourse')->name('create-course');
     Route::patch('/courses/{id}/edit', 'CourseController@editCourse')->name('edit-course');

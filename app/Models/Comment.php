@@ -18,6 +18,6 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'parent_id', 'class_id', 'comment_description',
+        'user_id', 'parent_id', 'course_class_id', 'comment_description',
     ];
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClassTagBridgesTable extends Migration
+class CreateEnroleesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateClassTagBridgesTable extends Migration
      */
     public function up()
     {
-        Schema::create('class_tag_bridges', function (Blueprint $table) {
+        Schema::create('enrolees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('class_id')->constrained();
-            $table->foreignId('tag_id')->constrained();
+            $table->foreignId('course_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->boolean('has_paid')->default(0);
+            $table->enum('status', ['enrolled', 'pending', 'unenrolled'])->default('pending');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateClassTagBridgesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_tag_bridges');
+        Schema::dropIfExists('enrolees');
     }
 }

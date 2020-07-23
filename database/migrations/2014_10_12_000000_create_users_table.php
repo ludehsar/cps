@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('cf_handle');
             $table->string('institution')->nullable();
-            $table->boolean('invalid_cf_handle')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

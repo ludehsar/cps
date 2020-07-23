@@ -14,6 +14,7 @@ use App\DataTables\UserLadderProblemDataTable;
 use App\DataTables\UserDataTable;
 use App\DataTables\CFSubmissionDataTable;
 use App\DataTables\CourseDataTable;
+use App\DataTables\CourseClassDataTable;
 use Illuminate\Support\Facades\DB;
 
 class AdminStaticController extends Controller
@@ -134,5 +135,16 @@ class AdminStaticController extends Controller
         }
 
         return view('admin.course.edit', compact('course'));
+    }
+
+    public function showCourseClasses(CourseClassDataTable $datatable, $id)
+    {
+        $course = Course::find($id);
+
+        if ($course == null) {
+            return abort(404);
+        }
+
+        return $datatable->with('courseId', $course->id)->render('admin.course.class-list', compact('course'));
     }
 }

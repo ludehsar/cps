@@ -21,4 +21,8 @@ class Course extends Model
     protected $fillable = [
         'course_name', 'course_description', 'user_id',
     ];
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
 }
