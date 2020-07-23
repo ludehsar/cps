@@ -45,7 +45,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Relationships
+     *
+    */
+    public function codeforcesSubmissions() {
+        return $this->hasMany('App\Models\CFSubmission');
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Models\Comments');
+    }
+
     public function courses() {
         return $this->hasMany('App\Models\Course');
+    }
+
+    public function courseClasses() {
+        return $this->hasMany('App\Models\CourseClass');
+    }
+
+    public function enrolledCourses() {
+        return $this->belongsToMany('App\Models\Course')->as('enrolees')->wherePivotIn('status', ['enrolled', 'pending']);
+    }
+
+    public function approvedEnrolledCourses() {
+        return $this->belongsToMany('App\Models\Course')->as('enrolees')->wherePivot('status', 'enrolled');
     }
 }

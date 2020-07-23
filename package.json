@@ -28,6 +28,7 @@
     "dependencies": {
         "datatables.net-bs4": "^1.10.21",
         "datatables.net-buttons-bs4": "^1.6.2",
+        "react-laravel-datatable": "^0.1.9",
         "sweetalert2": "^9.17.0"
     }
 }

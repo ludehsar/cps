@@ -21,4 +21,12 @@ class CFSubmission extends Model
     protected $fillable = [
         'user_id', 'submission_id', 'contest_id', 'problem_index', 'problem_title', 'problem_url',
     ];
+
+    /**
+     * Relationships
+     *
+    */
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
 }

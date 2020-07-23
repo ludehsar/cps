@@ -19,8 +19,28 @@ class Course extends Model
      * @var array
      */
     protected $fillable = [
-        'course_name', 'course_description', 'user_id',
+        'course_name', 'course_description', 'user_id', 'course_price',
     ];
+
+    /**
+     * Relationships
+     *
+    */
+    public function courseClasses() {
+        return $this->hasMany('App\Models\CourseClass');
+    }
+
+    public function enrolees() {
+        return $this->belongsToMany('App\Models\User')->as('enrolees')->wherePivotIn('status', ['enrolled', 'pending']);
+    }
+
+    public function approvedEnrolees() {
+        return $this->belongsToMany('App\Models\User')->as('enrolees')->wherePivot('status', 'enrolled');
+    }
+
+    public function ladders() {
+        return $this->belongsToMany('App\Models\Ladder')->as('recommended_ladders');
+    }
 
     public function user() {
         return $this->belongsTo('App\Models\User');

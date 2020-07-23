@@ -21,4 +21,12 @@ class Tag extends Model
     protected $fillable = [
         'tag_name',
     ];
+
+    /**
+     * Relationships
+     *
+    */
+    public function courseClasses() {
+        return $this->belongsToMany('App\Models\CourseClass')->as('course_class_tag_bridges');
+    }
 }

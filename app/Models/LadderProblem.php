@@ -21,4 +21,12 @@ class LadderProblem extends Model
     protected $fillable = [
         'ladder_id', 'problem_title', 'problem_url', 'online_judge', 'problem_difficulty',
     ];
+
+    /**
+     * Relationships
+     *
+    */
+    public function ladder() {
+        return $this->belongsTo('App\Models\Ladder');
+    }
 }

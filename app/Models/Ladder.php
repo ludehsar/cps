@@ -23,10 +23,14 @@ class Ladder extends Model
     ];
 
     /**
-     * Get the problems for the ladder.
-     */
-    public function problems()
-    {
+     * Relationships
+     *
+    */
+    public function recommendedToCourses() {
+        return $this->belongsToMany('App\Models\Course')->as('recommended_ladders');
+    }
+
+    public function problems() {
         return $this->hasMany('App\Models\LadderProblem');
     }
 }
