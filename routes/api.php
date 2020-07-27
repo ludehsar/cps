@@ -15,13 +15,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:api'], function() {
-    Route::get('/user', 'API\UserAPIController@getAuthUser');
-    Route::post('/settings', 'API\UserAPIController@saveUserProfile');
-    Route::post('/fetch-cf-submission/{id}', 'API\UserAPIController@fetchUserCFSubmission');
+    Route::get('/user', 'UserController@getAuthUser');
+    Route::post('/settings', 'UserController@saveUserProfile');
+    Route::post('/fetch-cf-submission/{id}', 'UserController@fetchUserCFSubmission');
+
+    Route::get('/ladders', 'LadderController@getAllLadders');
+    Route::get('/ladders/{id}', 'LadderController@getProblemsOfLadder');
 
     Route::group(['middleware' => 'admin'], function() {
-        Route::get('/user/{id}', 'API\UserAPIController@getUser');
-        Route::post('/user/change/{id}', 'API\UserAPIController@changeProfileDataAsAdmin');
+        Route::get('/user/{id}', 'UserController@getUser');
+        Route::post('/user/change/{id}', 'UserController@changeProfileDataAsAdmin');
 
         Route::delete('/courses/{id}/delete', 'API\CourseAPIController@deleteCourse');
     });

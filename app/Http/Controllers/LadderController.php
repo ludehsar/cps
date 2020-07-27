@@ -15,7 +15,27 @@ class LadderController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('auth:api');
+        $this->middleware('admin')->except(['getAllLadders']);
+    }
+
+    public function getAllLadders()
+    {
+        $ladders = Ladder::all();
+        return response($ladders, 200);
+    }
+
+    public function getProblemsOfLadder($id)
+    {
+        $ladder = Ladder::find($id);
+
+        if ($ladder == null) {
+            return response('Invalid ladder', 404);
+        }
+
+        $problems = $ladder->problems()->get();
+
+        return response($problems, 200);
     }
     
     public function createNewLadder(NewLadderRequest $request)

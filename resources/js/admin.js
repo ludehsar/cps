@@ -1,17 +1,16 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using React + Laravel.
- */
+import React from "react";
+import ReactDOM from "react-dom";
+import ReactAdmin from "./ReactAdmin";
+import DataTable from "react-data-table-component";
 
-require('./bootstrap');
-window.Cookies = require('./plugins/js.cookie');
-require('./argon-dashboard');
+window._ = require('lodash');
 
-/**
- * Next, we will create a fresh React component instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-require('./components/admin/UserProfile');
+window.DataTable = DataTable;
+
+ReactDOM.render(
+  <ReactAdmin />,
+  document.getElementById("root")
+);
