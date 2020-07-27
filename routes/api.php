@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/user/{id}', 'UserController@getUser');
+        Route::get('/users', 'UserController@getAllUsersPaginated');
         Route::post('/user/change/{id}', 'UserController@changeProfileDataAsAdmin');
 
         Route::delete('/courses/{id}/delete', 'API\CourseAPIController@deleteCourse');

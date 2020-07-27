@@ -91,7 +91,7 @@ function LadderProblemTable(props) {
   if (data.length > 0) {
     return (
       <div className={classes.tableWrapper}>
-        <Table aria-labelledby="tableTitle">
+        <Table size="small" aria-labelledby="tableTitle">
             <EnhancedTableHead rowCount={data.length} rows={columns} />
             <TableBody>
               {data

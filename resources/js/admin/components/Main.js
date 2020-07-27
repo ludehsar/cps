@@ -127,6 +127,13 @@ function Main(props) {
     setSelectedTab
   ]);
 
+  const selectUser = useCallback(() => {
+    smoothScrollTop();
+    setSelectedTab("User");
+  }, [
+    setSelectedTab
+  ]);
+
   const selectPosts = useCallback(() => {
     smoothScrollTop();
     document.title = "WaVer - Posts";
@@ -246,6 +253,7 @@ function Main(props) {
           targets={targets}
           selectDashboard={selectDashboard}
           selectLadder={selectLadder}
+          selectUser={selectUser}
           selectPosts={selectPosts}
           selectSubscription={selectSubscription}
           openAddBalanceDialog={openAddBalanceDialog}

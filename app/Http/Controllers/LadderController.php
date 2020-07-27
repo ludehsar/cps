@@ -16,7 +16,7 @@ class LadderController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
-        $this->middleware('admin')->except(['getAllLadders']);
+        $this->middleware('admin')->except(['getAllLadders', 'getProblemsOfLadder']);
     }
 
     public function getAllLadders()

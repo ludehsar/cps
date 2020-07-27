@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core";
 import Dashboard from "./dashboard/Dashboard";
 import Subscription from "./subscription/Subscription";
 import Ladder from "./ladders/Ladder";
+import User from "./users/User";
 import LadderProblem from "./ladders/problems/LadderProblem";
 import PropsRoute from "../../shared/components/PropsRoute";
 
@@ -63,9 +64,10 @@ function Routing(props) {
     isAccountActivated,
     selectDashboard,
     selectLadder,
+    selectUser,
     selectPosts,
     selectSubscription,
-    openAddBalanceDialog
+    openAddBalanceDialog,
   } = props;
   return (
     <div className={classes.wrapper}>
@@ -82,6 +84,12 @@ function Routing(props) {
           ladders={ladders}
           pushMessageToSnackbar={pushMessageToSnackbar}
           selectLadder={selectLadder}
+        />
+        <PropsRoute
+          path="/admin/users"
+          component={User}
+          pushMessageToSnackbar={pushMessageToSnackbar}
+          selectUser={selectUser}
         />
         <PropsRoute
           path="/admin/subscription"
@@ -127,6 +135,7 @@ Routing.propTypes = {
   isAccountActivated: PropTypes.bool.isRequired,
   selectDashboard: PropTypes.func.isRequired,
   selectLadder: PropTypes.func.isRequired,
+  selectUser: PropTypes.func.isRequired,
   selectPosts: PropTypes.func.isRequired,
   selectSubscription: PropTypes.func.isRequired,
   openAddBalanceDialog: PropTypes.func.isRequired,

@@ -27,6 +27,8 @@ import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import MenuIcon from "@material-ui/icons/Menu";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import ArchiveIcon from '@material-ui/icons/Archive';
+import PeopleIcon from '@material-ui/icons/People';
 import MessagePopperButton from "./MessagePopperButton";
 import SideDrawer from "./SideDrawer";
 import Balance from "./Balance";
@@ -181,7 +183,7 @@ function NavBar(props) {
       onClick: closeMobileDrawer,
       icon: {
         desktop: (
-          <AccountBalanceIcon
+          <ArchiveIcon
             className={
               selectedTab === "Ladder"
                 ? classes.textPrimary
@@ -190,7 +192,25 @@ function NavBar(props) {
             fontSize="small"
           />
         ),
-        mobile: <AccountBalanceIcon className="text-white" />
+        mobile: <ArchiveIcon className="text-white" />
+      }
+    },
+    {
+      link: "/admin/users",
+      name: "User",
+      onClick: closeMobileDrawer,
+      icon: {
+        desktop: (
+          <PeopleIcon
+            className={
+              selectedTab === "User"
+                ? classes.textPrimary
+                : "text-white"
+            }
+            fontSize="small"
+          />
+        ),
+        mobile: <PeopleIcon className="text-white" />
       }
     },
     {

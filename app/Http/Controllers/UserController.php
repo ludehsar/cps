@@ -28,6 +28,20 @@ class UserController extends Controller
         return response(auth('api')->user(), 200);
     }
 
+    public function getAllUsersPaginated()
+    {
+        $per_page = \Request::get('per_page') ?: 10;
+        $query = \Request::get('q') ?: '';
+        $users = User::where('id', 'like', '%' . $query . '%')
+                        ->orWhere('name', 'like', '%' . $query . '%')
+                        ->orWhere('email', 'like', '%' . $query . '%')
+                        ->orWhere('username', 'like', '%' . $query . '%')
+                        ->orWhere('cf_handle', 'like', '%' . $query . '%')
+                        ->orWhere('institution', 'like', '%' . $query . '%')
+                        ->paginate($per_page);
+        return response($users, 200);
+    }
+
     public function getUser($id)
     {
         $user = User::find($id);
