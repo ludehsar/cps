@@ -27,6 +27,9 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::get('/users', 'UserController@getAllUsersPaginated');
         Route::post('/user/change/{id}', 'UserController@changeProfileDataAsAdmin');
 
-        Route::delete('/courses/{id}/delete', 'API\CourseAPIController@deleteCourse');
+        Route::post('/courses/new', 'CourseController@storeNewCourse');
+        Route::delete('/courses/{id}/delete', 'CourseController@deleteCourse');
     });
 });
+
+Route::get('/courses', 'CourseController@getAllCoursesPaginated');

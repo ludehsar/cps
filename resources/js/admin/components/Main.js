@@ -8,6 +8,7 @@ import ConsecutiveSnackbarMessages from "../../shared/components/ConsecutiveSnac
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
 import persons from "../dummy_data/persons";
 import LazyLoadAddBalanceDialog from "./subscription/LazyLoadAddBalanceDialog";
+import LazyLoadAddNewCourseDialog from "./courses/LazyLoadAddNewCourseDialog";
 
 const styles = (theme) => ({
   main: {
@@ -50,9 +51,11 @@ function Main(props) {
   const [messages, setMessages] = useState([]);
   const [isAccountActivated, setIsAccountActivated] = useState(false);
   const [isAddBalanceDialogOpen, setIsAddBalanceDialogOpen] = useState(false);
+  const [isAddNewCourseDialogOpen, setIsAddNewCourseDialogOpen] = useState(false);
   const [pushMessageToSnackbar, setPushMessageToSnackbar] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [needToRefetchCourses, setNeedToRefetchCourses] = useState(true);
 
   const fetchRandomTargets = useCallback(() => {
     const targets = [];
@@ -81,12 +84,28 @@ function Main(props) {
     setIsAddBalanceDialogOpen(false);
   }, [setIsAddBalanceDialogOpen]);
 
+  const openAddNewCourseDialog = useCallback(() => {
+    setIsAddNewCourseDialogOpen(true);
+  }, [setIsAddNewCourseDialogOpen]);
+
+  const closeAddNewCourseDialog = useCallback(() => {
+    setIsAddNewCourseDialogOpen(false);
+  }, [setIsAddNewCourseDialogOpen]);
+
   const onPaymentSuccess = useCallback(() => {
     pushMessageToSnackbar({
       text: "Your balance has been updated.",
     });
     setIsAddBalanceDialogOpen(false);
   }, [pushMessageToSnackbar, setIsAddBalanceDialogOpen]);
+
+  const onNewCourseCreatedSuccess = useCallback(() => {
+    pushMessageToSnackbar({
+      text: "Your course has been successfully created.",
+    });
+    setIsAddNewCourseDialogOpen(false);
+    setNeedToRefetchCourses(true);
+  }, [pushMessageToSnackbar, setIsAddNewCourseDialogOpen, setNeedToRefetchCourses]);
 
   const toggleAccountActivation = useCallback(() => {
     if (pushMessageToSnackbar) {
@@ -105,7 +124,6 @@ function Main(props) {
 
   const selectDashboard = useCallback(() => {
     smoothScrollTop();
-    document.title = "WaVer - Dashboard";
     setSelectedTab("Dashboard");
     if (!hasFetchedCardChart) {
       setHasFetchedCardChart(true);
@@ -130,6 +148,13 @@ function Main(props) {
   const selectUser = useCallback(() => {
     smoothScrollTop();
     setSelectedTab("User");
+  }, [
+    setSelectedTab
+  ]);
+
+  const selectCourse = useCallback(() => {
+    smoothScrollTop();
+    setSelectedTab("Course");
   }, [
     setSelectedTab
   ]);
@@ -220,6 +245,11 @@ function Main(props) {
 
   return (
     <Fragment>
+      <LazyLoadAddNewCourseDialog
+        open={isAddNewCourseDialogOpen}
+        onClose={closeAddNewCourseDialog}
+        onSuccess={onNewCourseCreatedSuccess}
+      />
       <LazyLoadAddBalanceDialog
         open={isAddBalanceDialogOpen}
         onClose={closeAddBalanceDialog}
@@ -254,11 +284,15 @@ function Main(props) {
           selectDashboard={selectDashboard}
           selectLadder={selectLadder}
           selectUser={selectUser}
+          selectCourse={selectCourse}
           selectPosts={selectPosts}
           selectSubscription={selectSubscription}
           openAddBalanceDialog={openAddBalanceDialog}
+          openAddNewCourseDialog={openAddNewCourseDialog}
           setTargets={setTargets}
           setPosts={setPosts}
+          needToRefetchCourses={needToRefetchCourses}
+          setNeedToRefetchCourses={setNeedToRefetchCourses}
         />
       </main>
     </Fragment>

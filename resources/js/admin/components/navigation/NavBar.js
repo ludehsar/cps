@@ -29,6 +29,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import ArchiveIcon from '@material-ui/icons/Archive';
 import PeopleIcon from '@material-ui/icons/People';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import MessagePopperButton from "./MessagePopperButton";
 import SideDrawer from "./SideDrawer";
 import Balance from "./Balance";
@@ -211,6 +212,24 @@ function NavBar(props) {
           />
         ),
         mobile: <PeopleIcon className="text-white" />
+      }
+    },
+    {
+      link: "/admin/courses",
+      name: "Course",
+      onClick: closeMobileDrawer,
+      icon: {
+        desktop: (
+          <MenuBookIcon
+            className={
+              selectedTab === "Course"
+                ? classes.textPrimary
+                : "text-white"
+            }
+            fontSize="small"
+          />
+        ),
+        mobile: <MenuBookIcon className="text-white" />
       }
     },
     {

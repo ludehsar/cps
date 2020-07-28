@@ -104265,7 +104265,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var AdminComponent = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(9), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/components/Main */ "./resources/js/admin/components/Main.js"));
+  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(9), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./admin/components/Main */ "./resources/js/admin/components/Main.js"));
 });
 
 function ReactAdmin() {

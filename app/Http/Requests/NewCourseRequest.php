@@ -27,6 +27,7 @@ class NewCourseRequest extends FormRequest
         return [
             'course_name' => ['required', 'string', 'max:255'],
             'course_description' => ['required', 'string', 'max:255'],
+            'course_price' => ['required', 'numeric'],
         ];
     }
 }

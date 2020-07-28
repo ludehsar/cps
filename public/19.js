@@ -1,13 +1,105 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[19],{
 
-/***/ "./resources/js/admin/components/Main.js":
-/*!***********************************************!*\
-  !*** ./resources/js/admin/components/Main.js ***!
-  \***********************************************/
+/***/ "./resources/js/shared/components/DateTimePicker.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/shared/components/DateTimePicker.js ***!
+  \**********************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: D:\\Projects\\cps\\resources\\js\\admin\\components\\Main.js: Identifier 'selectLadder' has already been declared (130:8)\n\n\u001b[0m \u001b[90m 128 | \u001b[39m  ])\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 129 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 130 | \u001b[39m  \u001b[36mconst\u001b[39m selectLadder \u001b[33m=\u001b[39m useCallback(() \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m        \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 131 | \u001b[39m    smoothScrollTop()\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 132 | \u001b[39m    setSelectedTab(\u001b[32m\"User\"\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 133 | \u001b[39m  }\u001b[33m,\u001b[39m [\u001b[0m\n    at Object._raise (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:745:17)\n    at Object.raiseWithData (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:738:17)\n    at Object.raise (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:732:17)\n    at ScopeHandler.checkRedeclarationInScope (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:4792:12)\n    at ScopeHandler.declareName (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:4758:12)\n    at Object.checkLVal (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:9260:22)\n    at Object.parseVarId (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11836:10)\n    at Object.parseVar (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11811:12)\n    at Object.parseVarStatement (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11623:10)\n    at Object.parseStatementContent (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11222:21)\n    at Object.parseStatement (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11155:17)\n    at Object.parseBlockOrModuleBlockBody (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11730:25)\n    at Object.parseBlockBody (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11716:10)\n    at Object.parseBlock (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11700:10)\n    at Object.parseFunctionBody (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:10707:24)\n    at Object.parseFunctionBodyAndFinish (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:10690:10)\n    at D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11870:12\n    at Object.withTopicForbiddingContext (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11030:14)\n    at Object.parseFunction (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11869:10)\n    at Object.parseFunctionStatement (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11501:17)\n    at Object.parseStatementContent (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11193:21)\n    at Object.parseStatement (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11155:17)\n    at Object.parseBlockOrModuleBlockBody (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11730:25)\n    at Object.parseBlockBody (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11716:10)\n    at Object.parseTopLevel (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:11086:10)\n    at Object.parse (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:12767:10)\n    at parse (D:\\Projects\\cps\\node_modules\\@babel\\parser\\lib\\index.js:12820:38)\n    at parser (D:\\Projects\\cps\\node_modules\\@babel\\core\\lib\\parser\\index.js:54:34)\n    at parser.next (<anonymous>)\n    at normalizeFile (D:\\Projects\\cps\\node_modules\\@babel\\core\\lib\\transformation\\normalize-file.js:93:38)\n    at normalizeFile.next (<anonymous>)\n    at run (D:\\Projects\\cps\\node_modules\\@babel\\core\\lib\\transformation\\index.js:31:50)\n    at run.next (<anonymous>)\n    at Function.transform (D:\\Projects\\cps\\node_modules\\@babel\\core\\lib\\transform.js:27:41)\n    at transform.next (<anonymous>)\n    at step (D:\\Projects\\cps\\node_modules\\gensync\\index.js:254:32)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _material_ui_pickers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/pickers */ "./node_modules/@material-ui/pickers/esm/index.js");
+/* harmony import */ var _date_io_date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @date-io/date-fns */ "./node_modules/@date-io/date-fns/build/index.esm.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
+/* harmony import */ var _material_ui_icons_AccessTime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/icons/AccessTime */ "./node_modules/@material-ui/icons/AccessTime.js");
+/* harmony import */ var _material_ui_icons_AccessTime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_AccessTime__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _material_ui_icons_KeyboardArrowLeft__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/icons/KeyboardArrowLeft */ "./node_modules/@material-ui/icons/KeyboardArrowLeft.js");
+/* harmony import */ var _material_ui_icons_KeyboardArrowLeft__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_KeyboardArrowLeft__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _material_ui_icons_KeyboardArrowRight__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/icons/KeyboardArrowRight */ "./node_modules/@material-ui/icons/KeyboardArrowRight.js");
+/* harmony import */ var _material_ui_icons_KeyboardArrowRight__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_KeyboardArrowRight__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _material_ui_icons_DateRange__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/icons/DateRange */ "./node_modules/@material-ui/icons/DateRange.js");
+/* harmony import */ var _material_ui_icons_DateRange__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_DateRange__WEBPACK_IMPORTED_MODULE_8__);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+
+
+
+var Theme2 = function Theme2(theme) {
+  return Object(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["createMuiTheme"])(_objectSpread(_objectSpread({}, theme), {}, {
+    overrides: {
+      MuiOutlinedInput: {
+        root: {
+          width: 190,
+          "@media (max-width:  400px)": {
+            width: 160
+          },
+          "@media (max-width:  360px)": {
+            width: 140
+          },
+          "@media (max-width:  340px)": {
+            width: 120
+          }
+        },
+        input: {
+          padding: "9px 14.5px"
+        }
+      }
+    }
+  }));
+};
+
+function DateTimePicker(props) {
+  var disabled = props.disabled,
+      value = props.value,
+      onChange = props.onChange;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["MuiThemeProvider"], {
+    theme: Theme2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_pickers__WEBPACK_IMPORTED_MODULE_2__["MuiPickersUtilsProvider"], {
+    utils: _date_io_date_fns__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_pickers__WEBPACK_IMPORTED_MODULE_2__["DateTimePicker"], _extends({
+    inputVariant: "outlined",
+    leftArrowIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_icons_KeyboardArrowLeft__WEBPACK_IMPORTED_MODULE_6___default.a, null),
+    rightArrowIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_icons_KeyboardArrowRight__WEBPACK_IMPORTED_MODULE_7___default.a, null),
+    timeIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_icons_AccessTime__WEBPACK_IMPORTED_MODULE_5___default.a, null),
+    dateRangeIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_icons_DateRange__WEBPACK_IMPORTED_MODULE_8___default.a, null),
+    variant: "outlined",
+    disabled: disabled,
+    value: value,
+    onChange: onChange
+  }, props, {
+    inputProps: {
+      style: {
+        width: "100%",
+        cursor: "pointer"
+      }
+    }
+  }))));
+}
+
+DateTimePicker.propTypes = {
+  disabled: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.bool,
+  value: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.instanceOf(Date),
+  onChange: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["withTheme"])(DateTimePicker));
 
 /***/ })
 

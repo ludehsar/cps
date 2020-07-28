@@ -6,6 +6,7 @@ import Dashboard from "./dashboard/Dashboard";
 import Subscription from "./subscription/Subscription";
 import Ladder from "./ladders/Ladder";
 import User from "./users/User";
+import Course from "./courses/Course";
 import LadderProblem from "./ladders/problems/LadderProblem";
 import PropsRoute from "../../shared/components/PropsRoute";
 
@@ -65,9 +66,13 @@ function Routing(props) {
     selectDashboard,
     selectLadder,
     selectUser,
+    selectCourse,
     selectPosts,
     selectSubscription,
     openAddBalanceDialog,
+    openAddNewCourseDialog,
+    needToRefetchCourses,
+    setNeedToRefetchCourses,
   } = props;
   return (
     <div className={classes.wrapper}>
@@ -75,14 +80,12 @@ function Routing(props) {
         <PropsRoute
           path="/admin/ladders/:id"
           component={LadderProblem}
-          pushMessageToSnackbar={pushMessageToSnackbar}
           selectLadder={selectLadder}
         />
         <PropsRoute
           path="/admin/ladders"
           component={Ladder}
           ladders={ladders}
-          pushMessageToSnackbar={pushMessageToSnackbar}
           selectLadder={selectLadder}
         />
         <PropsRoute
@@ -90,6 +93,15 @@ function Routing(props) {
           component={User}
           pushMessageToSnackbar={pushMessageToSnackbar}
           selectUser={selectUser}
+        />
+        <PropsRoute
+          path="/admin/courses"
+          component={Course}
+          pushMessageToSnackbar={pushMessageToSnackbar}
+          selectCourse={selectCourse}
+          openAddNewCourseDialog={openAddNewCourseDialog}
+          needToRefetchCourses={needToRefetchCourses}
+          setNeedToRefetchCourses={setNeedToRefetchCourses}
         />
         <PropsRoute
           path="/admin/subscription"
@@ -136,9 +148,13 @@ Routing.propTypes = {
   selectDashboard: PropTypes.func.isRequired,
   selectLadder: PropTypes.func.isRequired,
   selectUser: PropTypes.func.isRequired,
+  selectCourse: PropTypes.func.isRequired,
   selectPosts: PropTypes.func.isRequired,
   selectSubscription: PropTypes.func.isRequired,
   openAddBalanceDialog: PropTypes.func.isRequired,
+  openAddNewCourseDialog: PropTypes.func.isRequired,
+  needToRefetchCourses: PropTypes.bool.isRequired,
+  setNeedToRefetchCourses: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(memo(Routing));
