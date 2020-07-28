@@ -115,9 +115,10 @@ function UserDataTable(props) {
   const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(0);
   const inputSearch = useRef();
 
-  const fetchUsers = useCallback((page = 1) => {
+  const fetchUsers = useCallback((page = currentPage) => {
     setLoading(true);
     axios.get("/api/users?page=" + page + "&per_page=" + perPage + "&q=" + searchQuery).then((res) => {
       setData(res.data.data);
@@ -127,8 +128,9 @@ function UserDataTable(props) {
   }, [setLoading, setData, perPage, searchQuery, setTotalRows]);
 
   const handlePageChange = useCallback((page) => {
-    fetchUsers(page);
-  }, [fetchUsers]);
+    setCurrentPage(page);
+    fetchCourses(page);
+  }, [setCurrentPage, fetchUsers]);
 
   const handlePerRowsChange = useCallback((newPerPage, page) => {
     setPerPage(newPerPage);

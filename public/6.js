@@ -1123,6 +1123,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _register_login_DialogSelector__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./register_login/DialogSelector */ "./resources/js/standard/components/register_login/DialogSelector.js");
 /* harmony import */ var _Routing__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Routing */ "./resources/js/standard/components/Routing.js");
 /* harmony import */ var _shared_functions_smoothScrollTop__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../shared/functions/smoothScrollTop */ "./resources/js/shared/functions/smoothScrollTop.js");
+/* harmony import */ var _material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @material-ui/lab/Alert */ "./node_modules/@material-ui/lab/esm/Alert/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1134,6 +1135,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 
 
 
@@ -1159,6 +1163,13 @@ var styles = function styles(theme) {
       overflowX: "hidden"
     }
   };
+};
+
+var Alert = function Alert(props) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_13__["default"], _extends({
+    elevation: 6,
+    variant: "filled"
+  }, props));
 };
 
 function Main(props) {
@@ -1269,10 +1280,15 @@ function Main(props) {
   });
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getUserData();
+    console.log(document.cookie.indexOf('laravel_token='));
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classes.wrapper
-  }, !isCookieRulesDialogOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cookies_CookieConsent__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Snackbar"], {
+    open: isLoggedIn && user.email_verified_at === null
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Alert, {
+    severity: "error"
+  }, "You haven't verified your email.")), !isCookieRulesDialogOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cookies_CookieConsent__WEBPACK_IMPORTED_MODULE_8__["default"], {
     handleCookieRulesDialogOpen: handleCookieRulesDialogOpen
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_register_login_DialogSelector__WEBPACK_IMPORTED_MODULE_10__["default"], {
     openLoginDialog: openLoginDialog,
@@ -3632,9 +3648,10 @@ function LoginDialog(props) {
     }).then(function () {
       setIsLoading(false);
       window.location.reload();
-    })["catch"](function (err) {
+    })["catch"](function (res) {
       setIsLoading(false);
-      setStatus("invalidPassword");
+      var errors = res.response.data.errors;
+      if (errors.username) setStatus("These credentials do not match our records.");
     });
   }, [setIsLoading, loginUsername, loginPassword, setStatus]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_shared_components_FormDialog__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -3651,7 +3668,7 @@ function LoginDialog(props) {
     content: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["TextField"], {
       variant: "outlined",
       margin: "normal",
-      error: status === "invalidPassword",
+      error: status === "These credentials do not match our records.",
       required: true,
       fullWidth: true,
       label: "Username",
@@ -3660,10 +3677,11 @@ function LoginDialog(props) {
       autoComplete: "off",
       type: "text",
       onChange: function onChange() {
-        if (status === "invalidPassword") {
+        if (status === "These credentials do not match our records.") {
           setStatus(null);
         }
       },
+      helperText: status === "These credentials do not match our records." ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "These credentials do not match our records.") : "",
       FormHelperTextProps: {
         error: true
       }
@@ -3672,16 +3690,15 @@ function LoginDialog(props) {
       margin: "normal",
       required: true,
       fullWidth: true,
-      error: status === "invalidPassword",
+      error: status === "These credentials do not match our records.",
       label: "Password",
       inputRef: loginPassword,
       autoComplete: "off",
       onChange: function onChange() {
-        if (status === "invalidPassword") {
+        if (status === "These credentials do not match our records.") {
           setStatus(null);
         }
       },
-      helperText: status === "invalidPassword" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Incorrect username or password. Try again, or click on", " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "\"Forgot Password?\""), " to reset it.") : "",
       FormHelperTextProps: {
         error: true
       },
@@ -3848,6 +3865,16 @@ function RegisterDialog(props) {
     }).then(function () {
       setIsLoading(false);
       window.location.reload();
+    })["catch"](function (res) {
+      var errors = res.response.data.errors;
+      if (errors.name) setStatus("somethingWentWrong");
+      if (errors.email) setStatus(errors.email[0]);
+      if (errors.cf_handle) setStatus("somethingWentWrong");
+      if (errors.username) setStatus(errors.username[0]);
+      if (errors.password) setStatus("somethingWentWrong");
+      if (errors.password_confirmation) setStatus("somethingWentWrong");
+      setIsLoading(false);
+      return;
     });
   }, [setIsLoading, setStatus, setHasTermsOfServiceError, registerPassword, registerPasswordRepeat, registerTermsCheckbox]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_shared_components_FormDialog__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -3867,17 +3894,24 @@ function RegisterDialog(props) {
       margin: "normal",
       required: true,
       fullWidth: true,
-      error: status === "invalidName",
+      error: status === "somethingWentWrong",
       label: "Full Name",
       inputRef: registerName,
       autoFocus: true,
       autoComplete: "off",
       type: "text",
       onChange: function onChange() {
-        if (status === "invalidName") {
+        if (status === "somethingWentWrong") {
           setStatus(null);
         }
       },
+      helperText: function () {
+        if (status === "somethingWentWrong") {
+          return "Something went wrong.";
+        }
+
+        return null;
+      }(),
       FormHelperTextProps: {
         error: true
       }
@@ -3886,16 +3920,23 @@ function RegisterDialog(props) {
       margin: "normal",
       required: true,
       fullWidth: true,
-      error: status === "invalidEmail",
+      error: status === "The email has already been taken.",
       label: "Email Address",
       inputRef: registerEmail,
       autoComplete: "off",
       type: "email",
       onChange: function onChange() {
-        if (status === "invalidEmail") {
+        if (status === "The email has already been taken.") {
           setStatus(null);
         }
       },
+      helperText: function () {
+        if (status === "The email has already been taken.") {
+          return status;
+        }
+
+        return null;
+      }(),
       FormHelperTextProps: {
         error: true
       }
@@ -3904,16 +3945,23 @@ function RegisterDialog(props) {
       margin: "normal",
       required: true,
       fullWidth: true,
-      error: status === "invalidCFHandle",
+      error: status === "somethingWentWrong",
       label: "Codeforces Handle",
       inputRef: registerCFHandle,
       autoComplete: "off",
       type: "text",
       onChange: function onChange() {
-        if (status === "invalidCFHandle") {
+        if (status === "somethingWentWrong") {
           setStatus(null);
         }
       },
+      helperText: function () {
+        if (status === "somethingWentWrong") {
+          return "Something went wrong.";
+        }
+
+        return null;
+      }(),
       FormHelperTextProps: {
         error: true
       }
@@ -3922,16 +3970,23 @@ function RegisterDialog(props) {
       margin: "normal",
       required: true,
       fullWidth: true,
-      error: status === "invalidUsername",
+      error: status === "The username has already been taken.",
       label: "Username",
       inputRef: registerUsername,
       autoComplete: "off",
       type: "text",
       onChange: function onChange() {
-        if (status === "invalidUsername") {
+        if (status === "The username has already been taken.") {
           setStatus(null);
         }
       },
+      helperText: function () {
+        if (status === "The username has already been taken.") {
+          return status;
+        }
+
+        return null;
+      }(),
       FormHelperTextProps: {
         error: true
       }
@@ -3940,12 +3995,12 @@ function RegisterDialog(props) {
       margin: "normal",
       required: true,
       fullWidth: true,
-      error: status === "passwordTooShort" || status === "passwordsDontMatch",
+      error: status === "passwordTooShort" || status === "passwordsDontMatch" || status === "somethingWentWrong",
       label: "Password",
       inputRef: registerPassword,
       autoComplete: "off",
       onChange: function onChange() {
-        if (status === "passwordTooShort" || status === "passwordsDontMatch") {
+        if (status === "passwordTooShort" || status === "passwordsDontMatch" || status === "somethingWentWrong") {
           setStatus(null);
         }
       },
@@ -3956,6 +4011,10 @@ function RegisterDialog(props) {
 
         if (status === "passwordsDontMatch") {
           return "Your passwords dont match.";
+        }
+
+        if (status === "somethingWentWrong") {
+          return "Something went wrong.";
         }
 
         return null;
@@ -3970,12 +4029,12 @@ function RegisterDialog(props) {
       margin: "normal",
       required: true,
       fullWidth: true,
-      error: status === "passwordTooShort" || status === "passwordsDontMatch",
+      error: status === "passwordTooShort" || status === "passwordsDontMatch" || status === "somethingWentWrong",
       label: "Repeat Password",
       inputRef: registerPasswordRepeat,
       autoComplete: "off",
       onChange: function onChange() {
-        if (status === "passwordTooShort" || status === "passwordsDontMatch") {
+        if (status === "passwordTooShort" || status === "passwordsDontMatch" || status === "somethingWentWrong") {
           setStatus(null);
         }
       },
@@ -3986,6 +4045,10 @@ function RegisterDialog(props) {
 
         if (status === "passwordsDontMatch") {
           return "Your passwords dont match.";
+        }
+
+        if (status === "somethingWentWrong") {
+          return "Something went wrong.";
         }
       }(),
       FormHelperTextProps: {

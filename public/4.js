@@ -193,7 +193,7 @@ function Main(props) {
       isLoggedIn = _useState46[0],
       setIsLoggedIn = _useState46[1];
 
-  var _useState47 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
+  var _useState47 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState48 = _slicedToArray(_useState47, 2),
       needToRefetchCourses = _useState48[0],
       setNeedToRefetchCourses = _useState48[1];
@@ -264,7 +264,7 @@ function Main(props) {
 
     if (!hasFetchedCardChart) {
       setHasFetchedCardChart(true);
-      Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ../../shared/components/CardChart */ "./resources/js/shared/components/CardChart.js")).then(function (Component) {
+      Promise.all(/*! import() */[__webpack_require__.e(21), __webpack_require__.e(3), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ../../shared/components/CardChart */ "./resources/js/shared/components/CardChart.js")).then(function (Component) {
         setCardChart(Component["default"]);
       });
     }
@@ -288,7 +288,7 @@ function Main(props) {
 
     if (!hasFetchedEmojiTextArea) {
       setHasFetchedEmojiTextArea(true);
-      Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(7), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ../../shared/components/EmojiTextArea */ "./resources/js/shared/components/EmojiTextArea.js")).then(function (Component) {
+      Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(8), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ../../shared/components/EmojiTextArea */ "./resources/js/shared/components/EmojiTextArea.js")).then(function (Component) {
         setEmojiTextArea(Component["default"]);
       });
     }
@@ -309,7 +309,7 @@ function Main(props) {
 
     if (!hasFetchedDateTimePicker) {
       setHasFetchedDateTimePicker(true);
-      Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ../../shared/components/DateTimePicker */ "./resources/js/shared/components/DateTimePicker.js")).then(function (Component) {
+      Promise.all(/*! import() */[__webpack_require__.e(21), __webpack_require__.e(5), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ../../shared/components/DateTimePicker */ "./resources/js/shared/components/DateTimePicker.js")).then(function (Component) {
         setDateTimePicker(Component["default"]);
       });
     }
@@ -794,14 +794,19 @@ function CourseDataTable(props) {
       perPage = _useState8[0],
       setPerPage = _useState8[1];
 
-  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
       _useState10 = _slicedToArray(_useState9, 2),
-      searchQuery = _useState10[0],
-      setSearchQuery = _useState10[1];
+      currentPage = _useState10[0],
+      setCurrentPage = _useState10[1];
+
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState12 = _slicedToArray(_useState11, 2),
+      searchQuery = _useState12[0],
+      setSearchQuery = _useState12[1];
 
   var inputSearch = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
   var fetchCourses = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
-    var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+    var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : currentPage;
     setLoading(true);
     axios.get("/api/courses?page=" + page + "&per_page=" + perPage + "&q=" + searchQuery).then(function (res) {
       setData(res.data.data);
@@ -810,20 +815,21 @@ function CourseDataTable(props) {
     });
   }, [setLoading, setData, perPage, searchQuery, setTotalRows]);
   var handlePageChange = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (page) {
+    setCurrentPage(page);
     fetchCourses(page);
-  }, [fetchCourses]);
+  }, [setCurrentPage, fetchCourses]);
   var handlePerRowsChange = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (newPerPage, page) {
     setPerPage(newPerPage);
-    setNeedToRefetchCourses(true);
   }, [setPerPage]);
   var handleSearchQueryChange = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (e) {
     setSearchQuery(inputSearch.current.value);
-    setNeedToRefetchCourses(true);
   }, [setSearchQuery, inputSearch]);
   var handleAction = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (e) {
     console.log(e.currentTarget.dataset.id);
   });
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function (async) {
+    fetchCourses();
+
     if (needToRefetchCourses) {
       fetchCourses();
       setNeedToRefetchCourses(false);
@@ -4065,9 +4071,14 @@ function UserDataTable(props) {
       searchQuery = _useState10[0],
       setSearchQuery = _useState10[1];
 
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0),
+      _useState12 = _slicedToArray(_useState11, 2),
+      currentPage = _useState12[0],
+      setCurrentPage = _useState12[1];
+
   var inputSearch = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
   var fetchUsers = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
-    var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+    var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : currentPage;
     setLoading(true);
     axios.get("/api/users?page=" + page + "&per_page=" + perPage + "&q=" + searchQuery).then(function (res) {
       setData(res.data.data);
@@ -4076,8 +4087,9 @@ function UserDataTable(props) {
     });
   }, [setLoading, setData, perPage, searchQuery, setTotalRows]);
   var handlePageChange = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (page) {
-    fetchUsers(page);
-  }, [fetchUsers]);
+    setCurrentPage(page);
+    fetchCourses(page);
+  }, [setCurrentPage, fetchUsers]);
   var handlePerRowsChange = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function (newPerPage, page) {
     setPerPage(newPerPage);
   }, [setPerPage]);

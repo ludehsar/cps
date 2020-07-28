@@ -1,7 +1,7 @@
 import React, { memo, useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import AOS from "aos/dist/aos";
-import { withStyles } from "@material-ui/core";
+import { withStyles, Snackbar } from "@material-ui/core";
 import NavBar from "./navigation/NavBar";
 import Footer from "./footer/Footer";
 import "aos/dist/aos.css";
@@ -11,6 +11,7 @@ import dummyBlogPosts from "../dummy_data/blogPosts";
 import DialogSelector from "./register_login/DialogSelector";
 import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
+import MuiAlert from '@material-ui/lab/Alert';
 
 AOS.init({ once: true });
 
@@ -20,6 +21,10 @@ const styles = (theme) => ({
     overflowX: "hidden",
   },
 });
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 function Main(props) {
   const { classes } = props;
@@ -112,10 +117,16 @@ function Main(props) {
 
   useEffect(() => {
     getUserData();
+    console.log(document.cookie.indexOf('laravel_token='));
   }, []);
 
   return (
     <div className={classes.wrapper}>
+      <Snackbar open={isLoggedIn && user.email_verified_at === null}>
+        <Alert severity="error">
+          You haven't verified your email.
+        </Alert>
+      </Snackbar>
       {!isCookieRulesDialogOpen && (
         <CookieConsent
           handleCookieRulesDialogOpen={handleCookieRulesDialogOpen}

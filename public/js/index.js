@@ -101491,7 +101491,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var StandardComponent = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["lazy"])(function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(8), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./standard/components/Main */ "./resources/js/standard/components/Main.js"));
+  return Promise.all(/*! import() */[__webpack_require__.e(21), __webpack_require__.e(1), __webpack_require__.e(2), __webpack_require__.e(7), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./standard/components/Main */ "./resources/js/standard/components/Main.js"));
 });
 
 function User() {

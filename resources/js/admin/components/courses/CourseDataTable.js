@@ -109,10 +109,11 @@ function CourseDataTable(props) {
   const [loading, setLoading] = useState(true);
   const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const inputSearch = useRef();
 
-  const fetchCourses = useCallback((page = 1) => {
+  const fetchCourses = useCallback((page = currentPage) => {
     setLoading(true);
     axios.get("/api/courses?page=" + page + "&per_page=" + perPage + "&q=" + searchQuery).then((res) => {
       setData(res.data.data);
@@ -122,17 +123,16 @@ function CourseDataTable(props) {
   }, [setLoading, setData, perPage, searchQuery, setTotalRows]);
 
   const handlePageChange = useCallback((page) => {
+    setCurrentPage(page);
     fetchCourses(page);
-  }, [fetchCourses]);
+  }, [setCurrentPage, fetchCourses]);
 
   const handlePerRowsChange = useCallback((newPerPage, page) => {
     setPerPage(newPerPage);
-    setNeedToRefetchCourses(true);
   }, [setPerPage]);
 
   const handleSearchQueryChange = useCallback((e) => {
     setSearchQuery(inputSearch.current.value);
-    setNeedToRefetchCourses(true);
   }, [setSearchQuery, inputSearch]);
 
   const handleAction = useCallback((e) => {
@@ -140,6 +140,7 @@ function CourseDataTable(props) {
   });
 
   useEffect(async => {
+    fetchCourses();
     if (needToRefetchCourses) {
       fetchCourses();
       setNeedToRefetchCourses(false);

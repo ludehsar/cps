@@ -61,9 +61,10 @@ function LoginDialog(props) {
     }).then(() => {
       setIsLoading(false);
       window.location.reload();
-    }).catch((err) => {
+    }).catch((res) => {
       setIsLoading(false);
-      setStatus("invalidPassword");
+      const errors = res.response.data.errors;
+      if (errors.username) setStatus("These credentials do not match our records.");
     });
   }, [setIsLoading, loginUsername, loginPassword, setStatus]);
 
@@ -85,7 +86,7 @@ function LoginDialog(props) {
             <TextField
               variant="outlined"
               margin="normal"
-              error={status === "invalidPassword"}
+              error={status === "These credentials do not match our records."}
               required
               fullWidth
               label="Username"
@@ -94,10 +95,19 @@ function LoginDialog(props) {
               autoComplete="off"
               type="text"
               onChange={() => {
-                if (status === "invalidPassword") {
+                if (status === "These credentials do not match our records.") {
                   setStatus(null);
                 }
               }}
+              helperText={
+                status === "These credentials do not match our records." ? (
+                  <span>
+                    These credentials do not match our records.
+                  </span>
+                ) : (
+                  ""
+                )
+              }
               FormHelperTextProps={{ error: true }}
             />
             <VisibilityPasswordTextField
@@ -105,25 +115,15 @@ function LoginDialog(props) {
               margin="normal"
               required
               fullWidth
-              error={status === "invalidPassword"}
+              error={status === "These credentials do not match our records."}
               label="Password"
               inputRef={loginPassword}
               autoComplete="off"
               onChange={() => {
-                if (status === "invalidPassword") {
+                if (status === "These credentials do not match our records.") {
                   setStatus(null);
                 }
               }}
-              helperText={
-                status === "invalidPassword" ? (
-                  <span>
-                    Incorrect username or password. Try again, or click on{" "}
-                    <b>&quot;Forgot Password?&quot;</b> to reset it.
-                  </span>
-                ) : (
-                  ""
-                )
-              }
               FormHelperTextProps={{ error: true }}
               onVisibilityChange={setIsPasswordVisible}
               isVisible={isPasswordVisible}

@@ -71,6 +71,16 @@ function RegisterDialog(props) {
     }).then(() => {
       setIsLoading(false);
       window.location.reload();
+    }).catch((res) => {
+      const errors = res.response.data.errors;
+      if (errors.name) setStatus("somethingWentWrong");
+      if (errors.email) setStatus(errors.email[0]);
+      if (errors.cf_handle) setStatus("somethingWentWrong");
+      if (errors.username) setStatus(errors.username[0]);
+      if (errors.password) setStatus("somethingWentWrong");
+      if (errors.password_confirmation) setStatus("somethingWentWrong");
+      setIsLoading(false);
+      return;
     });
   }, [
     setIsLoading,
@@ -101,17 +111,23 @@ function RegisterDialog(props) {
             margin="normal"
             required
             fullWidth
-            error={status === "invalidName"}
+            error={status === "somethingWentWrong"}
             label="Full Name"
             inputRef={registerName}
             autoFocus
             autoComplete="off"
             type="text"
             onChange={() => {
-              if (status === "invalidName") {
+              if (status === "somethingWentWrong") {
                 setStatus(null);
               }
             }}
+            helperText={(() => {
+              if (status === "somethingWentWrong") {
+                return "Something went wrong.";
+              }
+              return null;
+            })()}
             FormHelperTextProps={{ error: true }}
           />
           <TextField
@@ -119,16 +135,22 @@ function RegisterDialog(props) {
             margin="normal"
             required
             fullWidth
-            error={status === "invalidEmail"}
+            error={status === "The email has already been taken."}
             label="Email Address"
             inputRef={registerEmail}
             autoComplete="off"
             type="email"
             onChange={() => {
-              if (status === "invalidEmail") {
+              if (status === "The email has already been taken.") {
                 setStatus(null);
               }
             }}
+            helperText={(() => {
+              if (status === "The email has already been taken.") {
+                return status;
+              }
+              return null;
+            })()}
             FormHelperTextProps={{ error: true }}
           />
           <TextField
@@ -136,16 +158,22 @@ function RegisterDialog(props) {
             margin="normal"
             required
             fullWidth
-            error={status === "invalidCFHandle"}
+            error={status === "somethingWentWrong"}
             label="Codeforces Handle"
             inputRef={registerCFHandle}
             autoComplete="off"
             type="text"
             onChange={() => {
-              if (status === "invalidCFHandle") {
+              if (status === "somethingWentWrong") {
                 setStatus(null);
               }
             }}
+            helperText={(() => {
+              if (status === "somethingWentWrong") {
+                return "Something went wrong.";
+              }
+              return null;
+            })()}
             FormHelperTextProps={{ error: true }}
           />
           <TextField
@@ -153,16 +181,22 @@ function RegisterDialog(props) {
             margin="normal"
             required
             fullWidth
-            error={status === "invalidUsername"}
+            error={status === "The username has already been taken."}
             label="Username"
             inputRef={registerUsername}
             autoComplete="off"
             type="text"
             onChange={() => {
-              if (status === "invalidUsername") {
+              if (status === "The username has already been taken.") {
                 setStatus(null);
               }
             }}
+            helperText={(() => {
+              if (status === "The username has already been taken.") {
+                return status;
+              }
+              return null;
+            })()}
             FormHelperTextProps={{ error: true }}
           />
           <VisibilityPasswordTextField
@@ -171,7 +205,7 @@ function RegisterDialog(props) {
             required
             fullWidth
             error={
-              status === "passwordTooShort" || status === "passwordsDontMatch"
+              status === "passwordTooShort" || status === "passwordsDontMatch" || status === "somethingWentWrong"
             }
             label="Password"
             inputRef={registerPassword}
@@ -179,7 +213,8 @@ function RegisterDialog(props) {
             onChange={() => {
               if (
                 status === "passwordTooShort" ||
-                status === "passwordsDontMatch"
+                status === "passwordsDontMatch" ||
+                status === "somethingWentWrong"
               ) {
                 setStatus(null);
               }
@@ -190,6 +225,9 @@ function RegisterDialog(props) {
               }
               if (status === "passwordsDontMatch") {
                 return "Your passwords dont match.";
+              }
+              if (status === "somethingWentWrong") {
+                return "Something went wrong.";
               }
               return null;
             })()}
@@ -203,7 +241,7 @@ function RegisterDialog(props) {
             required
             fullWidth
             error={
-              status === "passwordTooShort" || status === "passwordsDontMatch"
+              status === "passwordTooShort" || status === "passwordsDontMatch" || status === "somethingWentWrong"
             }
             label="Repeat Password"
             inputRef={registerPasswordRepeat}
@@ -211,7 +249,8 @@ function RegisterDialog(props) {
             onChange={() => {
               if (
                 status === "passwordTooShort" ||
-                status === "passwordsDontMatch"
+                status === "passwordsDontMatch" ||
+                status === "somethingWentWrong"
               ) {
                 setStatus(null);
               }
@@ -222,6 +261,9 @@ function RegisterDialog(props) {
               }
               if (status === "passwordsDontMatch") {
                 return "Your passwords dont match.";
+              }
+              if (status === "somethingWentWrong") {
+                return "Something went wrong.";
               }
             })()}
             FormHelperTextProps={{ error: true }}

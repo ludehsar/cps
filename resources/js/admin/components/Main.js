@@ -55,7 +55,7 @@ function Main(props) {
   const [pushMessageToSnackbar, setPushMessageToSnackbar] = useState(null);
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [needToRefetchCourses, setNeedToRefetchCourses] = useState(true);
+  const [needToRefetchCourses, setNeedToRefetchCourses] = useState(false);
 
   const fetchRandomTargets = useCallback(() => {
     const targets = [];
