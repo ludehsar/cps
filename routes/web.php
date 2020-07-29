@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
 	Route::get('/', 'ReactStaticController@showAdminpage');

@@ -264,7 +264,7 @@ function Main(props) {
 
     if (!hasFetchedCardChart) {
       setHasFetchedCardChart(true);
-      Promise.all(/*! import() */[__webpack_require__.e(21), __webpack_require__.e(3), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ../../shared/components/CardChart */ "./resources/js/shared/components/CardChart.js")).then(function (Component) {
+      Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(3), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ../../shared/components/CardChart */ "./resources/js/shared/components/CardChart.js")).then(function (Component) {
         setCardChart(Component["default"]);
       });
     }
@@ -309,7 +309,7 @@ function Main(props) {
 
     if (!hasFetchedDateTimePicker) {
       setHasFetchedDateTimePicker(true);
-      Promise.all(/*! import() */[__webpack_require__.e(21), __webpack_require__.e(5), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ../../shared/components/DateTimePicker */ "./resources/js/shared/components/DateTimePicker.js")).then(function (Component) {
+      Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ../../shared/components/DateTimePicker */ "./resources/js/shared/components/DateTimePicker.js")).then(function (Component) {
         setDateTimePicker(Component["default"]);
       });
     }

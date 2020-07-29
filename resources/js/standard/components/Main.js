@@ -12,6 +12,7 @@ import DialogSelector from "./register_login/DialogSelector";
 import Routing from "./Routing";
 import smoothScrollTop from "../../shared/functions/smoothScrollTop";
 import MuiAlert from '@material-ui/lab/Alert';
+import { useSnackbar } from 'notistack';
 
 AOS.init({ once: true });
 
@@ -28,6 +29,7 @@ const Alert = (props) => {
 
 function Main(props) {
   const { classes } = props;
+  const { enqueueSnackbar } = useSnackbar();
   const [selectedTab, setSelectedTab] = useState(null);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [blogPosts, setBlogPosts] = useState([]);
@@ -115,16 +117,23 @@ function Main(props) {
     });
   });
 
+  const sendVerificationMail = useCallback(() => {
+    axios.post('/email/resend').then(() => {
+      enqueueSnackbar('Successfully sent mail!', { variant: 'success' });
+    }).catch(() => {
+      enqueueSnackbar('Something went wrong!', { variant: 'error' });
+    });
+  });
+
   useEffect(() => {
     getUserData();
-    console.log(document.cookie.indexOf('laravel_token='));
-  }, []);
+  }, [getUserData]);
 
   return (
     <div className={classes.wrapper}>
       <Snackbar open={isLoggedIn && user.email_verified_at === null}>
         <Alert severity="error">
-          You haven't verified your email.
+          You haven't verified your email. Please check your email for a verification link. If you did not receive the email, <a href="#" style={{ color: 'white' }} onClick={sendVerificationMail}>click here to request another</a>.
         </Alert>
       </Snackbar>
       {!isCookieRulesDialogOpen && (

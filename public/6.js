@@ -1124,6 +1124,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Routing__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Routing */ "./resources/js/standard/components/Routing.js");
 /* harmony import */ var _shared_functions_smoothScrollTop__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../shared/functions/smoothScrollTop */ "./resources/js/shared/functions/smoothScrollTop.js");
 /* harmony import */ var _material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @material-ui/lab/Alert */ "./node_modules/@material-ui/lab/esm/Alert/index.js");
+/* harmony import */ var notistack__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! notistack */ "./node_modules/notistack/dist/notistack.esm.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1137,6 +1138,7 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 
 
 
@@ -1174,6 +1176,9 @@ var Alert = function Alert(props) {
 
 function Main(props) {
   var classes = props.classes;
+
+  var _useSnackbar = Object(notistack__WEBPACK_IMPORTED_MODULE_14__["useSnackbar"])(),
+      enqueueSnackbar = _useSnackbar.enqueueSnackbar;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
       _useState2 = _slicedToArray(_useState, 2),
@@ -1278,17 +1283,33 @@ function Main(props) {
       window.location.reload();
     });
   });
+  var sendVerificationMail = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
+    axios.post('/email/resend').then(function () {
+      enqueueSnackbar('Successfully sent mail!', {
+        variant: 'success'
+      });
+    })["catch"](function () {
+      enqueueSnackbar('Something went wrong!', {
+        variant: 'error'
+      });
+    });
+  });
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getUserData();
-    console.log(document.cookie.indexOf('laravel_token='));
-  }, []);
+  }, [getUserData]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classes.wrapper
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Snackbar"], {
     open: isLoggedIn && user.email_verified_at === null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Alert, {
     severity: "error"
-  }, "You haven't verified your email.")), !isCookieRulesDialogOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cookies_CookieConsent__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, "You haven't verified your email. Please check your email for a verification link. If you did not receive the email, ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "#",
+    style: {
+      color: 'white'
+    },
+    onClick: sendVerificationMail
+  }, "click here to request another"), ".")), !isCookieRulesDialogOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cookies_CookieConsent__WEBPACK_IMPORTED_MODULE_8__["default"], {
     handleCookieRulesDialogOpen: handleCookieRulesDialogOpen
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_register_login_DialogSelector__WEBPACK_IMPORTED_MODULE_10__["default"], {
     openLoginDialog: openLoginDialog,

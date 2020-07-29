@@ -60,6 +60,7 @@ return [
         'sendmail' => [
             'transport' => 'sendmail',
             'path' => '/usr/sbin/sendmail -bs',
+            'from' => ['address' => 'noreply@cpsacademy.live', 'name' => 'CPS Academy']
         ],
 
         'log' => [
