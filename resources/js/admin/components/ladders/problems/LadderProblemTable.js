@@ -83,8 +83,8 @@ function LadderProblemTable(props) {
   useEffect(async => {
     const url = window.location.href;
     const urlArr = url.split("/");
-
-    const dataSource = "/api/ladders/" + urlArr[urlArr.length - 1];
+    const id = urlArr[urlArr.length - 1];
+    const dataSource = "/api/ladders/" + id + "/problems";
     fetchLadderProblems(dataSource);
   }, [fetchLadderProblems]);
 

@@ -20,7 +20,8 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('/fetch-cf-submission/{id}', 'UserController@fetchUserCFSubmission');
 
     Route::get('/ladders', 'LadderController@getAllLadders');
-    Route::get('/ladders/{id}', 'LadderController@getProblemsOfLadder');
+    Route::get('/ladders/{id}', 'LadderController@getLadder');
+    Route::get('/ladders/{id}/problems', 'LadderController@getProblemsOfLadder');
 
     Route::group(['middleware' => 'admin'], function() {
         Route::get('/user/{id}', 'UserController@getUser');
