@@ -3385,7 +3385,16 @@ function NavBar(props) {
     classes: {
       text: classes.menuButtonText
     }
-  }, "Homepage"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Hidden"], {
+  }, "Landing Page")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "/docs",
+    className: classes.noDecoration
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Button"], {
+    color: "secondary",
+    size: "large",
+    classes: {
+      text: classes.menuButtonText
+    }
+  }, "Docs"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Hidden"], {
     xsDown: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Drawer"] //  both drawers can be combined into one for performance
   , {

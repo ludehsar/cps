@@ -45,7 +45,6 @@ function Main(props) {
 
   const selectBlog = useCallback(() => {
     smoothScrollTop();
-    document.title = "WaVer - Blog";
     setSelectedTab("Blog");
   }, [setSelectedTab]);
 
@@ -79,23 +78,6 @@ function Main(props) {
     setDialogOpen("changePassword");
   }, [setDialogOpen]);
 
-  const fetchBlogPosts = useCallback(() => {
-    const blogPosts = dummyBlogPosts.map((blogPost) => {
-      let title = blogPost.title;
-      title = title.toLowerCase();
-      /* Remove unwanted characters, only accept alphanumeric and space */
-      title = title.replace(/[^A-Za-z0-9 ]/g, "");
-      /* Replace multi spaces with a single space */
-      title = title.replace(/\s{2,}/g, " ");
-      /* Replace space with a '-' symbol */
-      title = title.replace(/\s/g, "-");
-      blogPost.url = `/blog/post/${title}`;
-      blogPost.params = `?id=${blogPost.id}`;
-      return blogPost;
-    });
-    setBlogPosts(blogPosts);
-  }, [setBlogPosts]);
-
   const handleCookieRulesDialogOpen = useCallback(() => {
     setIsCookieRulesDialogOpen(true);
   }, [setIsCookieRulesDialogOpen]);
@@ -108,12 +90,17 @@ function Main(props) {
     axios.get('/api/user').then((res) => {
       setUser(res.data);
       setIsLoggedIn(true);
-    }, [setUser, setIsLoggedIn]);
+    }).catch(() => {
+      setUser(null);
+      setIsLoggedIn(false);
+    });;
   }, [setUser, setIsLoggedIn]);
 
   const logoutUser = useCallback(() => {
     axios.post("/logout").then(() => {
       window.location.reload();
+    }).catch(() => {
+      enqueueSnackbar('Something went wrong!', { variant: 'error' });
     });
   });
 
@@ -125,6 +112,10 @@ function Main(props) {
     });
   });
 
+  const onChangePasswordMailSentSuccess = useCallback(() => {
+    enqueueSnackbar('Mail will be sent in 5 minutes. Please check your mailbox.', {variant: 'success'});
+  })
+
   useEffect(() => {
     getUserData();
   }, [getUserData]);
@@ -133,7 +124,7 @@ function Main(props) {
     <div className={classes.wrapper}>
       <Snackbar open={isLoggedIn && user.email_verified_at === null}>
         <Alert severity="error">
-          You haven't verified your email. Please check your email for a verification link. If you did not receive the email, <a href="#" style={{ color: 'white' }} onClick={sendVerificationMail}>click here to request another</a>.
+          You haven't verified your email. Please check your email for a verification link. If you did not receive the email, <a href="#" style={{ color: 'white' }} onClick={sendVerificationMail}>click here to request another</a>. Please check your spam folders too.
         </Alert>
       </Snackbar>
       {!isCookieRulesDialogOpen && (
@@ -148,6 +139,7 @@ function Main(props) {
         openTermsDialog={openTermsDialog}
         openRegisterDialog={openRegisterDialog}
         openChangePasswordDialog={openChangePasswordDialog}
+        onChangePasswordMailSentSuccess={onChangePasswordMailSentSuccess}
       />
       <CookieRulesDialog
         open={isCookieRulesDialogOpen}
@@ -157,6 +149,7 @@ function Main(props) {
         selectedTab={selectedTab}
         openLoginDialog={openLoginDialog}
         openRegisterDialog={openRegisterDialog}
+        onChangePasswordMailSentSuccess={onChangePasswordMailSentSuccess}
         mobileDrawerOpen={isMobileDrawerOpen}
         handleMobileDrawerOpen={handleMobileDrawerOpen}
         handleMobileDrawerClose={handleMobileDrawerClose}

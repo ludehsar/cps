@@ -13,16 +13,19 @@ function DialogSelector(props) {
     openRegisterDialog,
     openLoginDialog,
     openChangePasswordDialog,
+    onChangePasswordMailSentSuccess,
     onClose,
   } = props;
   const [loginStatus, setLoginStatus] = useState(null);
   const [registerStatus, setRegisterStatus] = useState(null);
+  const [changePasswordStatus, setChangePasswordStatus] = useState(null);
 
   const _onClose = useCallback(() => {
     setLoginStatus(null);
     setRegisterStatus(null);
+    setChangePasswordStatus(null);
     onClose();
-  }, [onClose, setLoginStatus, setRegisterStatus]);
+  }, [onClose, setLoginStatus, setRegisterStatus, setChangePasswordStatus]);
 
   const printDialog = useCallback(() => {
     switch (dialogOpen) {
@@ -49,8 +52,10 @@ function DialogSelector(props) {
       case "changePassword":
         return (
           <ChangePasswordDialog
-            setLoginStatus={setLoginStatus}
+            status={changePasswordStatus}
+            setStatus={setChangePasswordStatus}
             onClose={openLoginDialog}
+            onSuccess={onChangePasswordMailSentSuccess}
           />
         );
       default:
@@ -64,8 +69,10 @@ function DialogSelector(props) {
     _onClose,
     loginStatus,
     registerStatus,
+    changePasswordStatus,
     setLoginStatus,
     setRegisterStatus,
+    setChangePasswordStatus,
   ]);
 
   return (
@@ -83,6 +90,7 @@ DialogSelector.propTypes = {
   openTermsDialog: PropTypes.func.isRequired,
   openRegisterDialog: PropTypes.func.isRequired,
   openChangePasswordDialog: PropTypes.func.isRequired,
+  onChangePasswordMailSentSuccess: PropTypes.func.isRequired,
 };
 
 export default DialogSelector;

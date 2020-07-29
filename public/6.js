@@ -1221,7 +1221,6 @@ function Main(props) {
   }, [setSelectedTab]);
   var selectBlog = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
     Object(_shared_functions_smoothScrollTop__WEBPACK_IMPORTED_MODULE_12__["default"])();
-    document.title = "WaVer - Blog";
     setSelectedTab("Blog");
   }, [setSelectedTab]);
   var openLoginDialog = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
@@ -1247,25 +1246,6 @@ function Main(props) {
   var openChangePasswordDialog = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
     setDialogOpen("changePassword");
   }, [setDialogOpen]);
-  var fetchBlogPosts = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
-    var blogPosts = _dummy_data_blogPosts__WEBPACK_IMPORTED_MODULE_9__["default"].map(function (blogPost) {
-      var title = blogPost.title;
-      title = title.toLowerCase();
-      /* Remove unwanted characters, only accept alphanumeric and space */
-
-      title = title.replace(/[^A-Za-z0-9 ]/g, "");
-      /* Replace multi spaces with a single space */
-
-      title = title.replace(/\s{2,}/g, " ");
-      /* Replace space with a '-' symbol */
-
-      title = title.replace(/\s/g, "-");
-      blogPost.url = "/blog/post/".concat(title);
-      blogPost.params = "?id=".concat(blogPost.id);
-      return blogPost;
-    });
-    setBlogPosts(blogPosts);
-  }, [setBlogPosts]);
   var handleCookieRulesDialogOpen = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
     setIsCookieRulesDialogOpen(true);
   }, [setIsCookieRulesDialogOpen]);
@@ -1276,11 +1256,19 @@ function Main(props) {
     axios.get('/api/user').then(function (res) {
       setUser(res.data);
       setIsLoggedIn(true);
-    }, [setUser, setIsLoggedIn]);
+    })["catch"](function () {
+      setUser(null);
+      setIsLoggedIn(false);
+    });
+    ;
   }, [setUser, setIsLoggedIn]);
   var logoutUser = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
     axios.post("/logout").then(function () {
       window.location.reload();
+    })["catch"](function () {
+      enqueueSnackbar('Something went wrong!', {
+        variant: 'error'
+      });
     });
   });
   var sendVerificationMail = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
@@ -1292,6 +1280,11 @@ function Main(props) {
       enqueueSnackbar('Something went wrong!', {
         variant: 'error'
       });
+    });
+  });
+  var onChangePasswordMailSentSuccess = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
+    enqueueSnackbar('Mail will be sent in 5 minutes. Please check your mailbox.', {
+      variant: 'success'
     });
   });
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
@@ -1309,7 +1302,7 @@ function Main(props) {
       color: 'white'
     },
     onClick: sendVerificationMail
-  }, "click here to request another"), ".")), !isCookieRulesDialogOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cookies_CookieConsent__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, "click here to request another"), ". Please check your spam folders too.")), !isCookieRulesDialogOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cookies_CookieConsent__WEBPACK_IMPORTED_MODULE_8__["default"], {
     handleCookieRulesDialogOpen: handleCookieRulesDialogOpen
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_register_login_DialogSelector__WEBPACK_IMPORTED_MODULE_10__["default"], {
     openLoginDialog: openLoginDialog,
@@ -1317,7 +1310,8 @@ function Main(props) {
     onClose: closeDialog,
     openTermsDialog: openTermsDialog,
     openRegisterDialog: openRegisterDialog,
-    openChangePasswordDialog: openChangePasswordDialog
+    openChangePasswordDialog: openChangePasswordDialog,
+    onChangePasswordMailSentSuccess: onChangePasswordMailSentSuccess
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cookies_CookieRulesDialog__WEBPACK_IMPORTED_MODULE_7__["default"], {
     open: isCookieRulesDialogOpen,
     onClose: handleCookieRulesDialogClose
@@ -1325,6 +1319,7 @@ function Main(props) {
     selectedTab: selectedTab,
     openLoginDialog: openLoginDialog,
     openRegisterDialog: openRegisterDialog,
+    onChangePasswordMailSentSuccess: onChangePasswordMailSentSuccess,
     mobileDrawerOpen: isMobileDrawerOpen,
     handleMobileDrawerOpen: handleMobileDrawerOpen,
     handleMobileDrawerClose: handleMobileDrawerClose,
@@ -3394,23 +3389,34 @@ var styles = function styles(theme) {
 };
 
 function ChangePassword(props) {
-  var onClose = props.onClose,
-      classes = props.classes,
-      setLoginStatus = props.setLoginStatus;
+  var status = props.status,
+      setStatus = props.setStatus,
+      onSuccess = props.onSuccess,
+      onClose = props.onClose,
+      classes = props.classes;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState2 = _slicedToArray(_useState, 2),
       isLoading = _useState2[0],
       setIsLoading = _useState2[1];
 
+  var inputEmail = Object(react__WEBPACK_IMPORTED_MODULE_0__["useRef"])();
   var sendPasswordEmail = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
+    setStatus(null);
     setIsLoading(true);
-    setTimeout(function () {
-      setLoginStatus("verificationEmailSend");
+    axios.post('/password/email', {
+      email: inputEmail.current.value
+    }).then(function () {
       setIsLoading(false);
+      onSuccess();
       onClose();
-    }, 1500);
-  }, [setIsLoading, setLoginStatus, onClose]);
+    })["catch"](function (res) {
+      var errors = res.response.data.errors;
+      if (errors.email) setStatus(errors.email[0]);
+      setIsLoading(false);
+      return;
+    });
+  }, [setIsLoading, setStatus, inputEmail, onSuccess, onClose]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Dialog"], {
     open: true,
     hideBackdrop: true,
@@ -3427,15 +3433,32 @@ function ChangePassword(props) {
     className: classes.dialogContent
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Typography"], {
     paragraph: true
-  }, "Enter your email address below and we will send you instructions on how to reset your password."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
+  }, "Enter your email address below and we will send you verification code to reset your password."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
     variant: "outlined",
     margin: "dense",
     required: true,
     fullWidth: true,
+    error: status === "We can't find a user with that email address.",
     label: "Email Address",
+    inputRef: inputEmail,
     autoFocus: true,
+    autoComplete: "off",
     type: "email",
-    autoComplete: "off"
+    onChange: function onChange() {
+      if (status === "We can't find a user with that email address.") {
+        setStatus(null);
+      }
+    },
+    helperText: function () {
+      if (status === "We can't find a user with that email address.") {
+        return status;
+      }
+
+      return null;
+    }(),
+    FormHelperTextProps: {
+      error: true
+    }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["DialogActions"], {
     className: classes.dialogActions
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Button"], {
@@ -3453,7 +3476,8 @@ ChangePassword.propTypes = {
   onClose: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
   classes: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
   theme: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.object.isRequired,
-  setLoginStatus: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
+  status: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  setStatus: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (Object(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["withStyles"])(styles, {
   withTheme: true
@@ -3505,6 +3529,7 @@ function DialogSelector(props) {
       openRegisterDialog = props.openRegisterDialog,
       openLoginDialog = props.openLoginDialog,
       openChangePasswordDialog = props.openChangePasswordDialog,
+      onChangePasswordMailSentSuccess = props.onChangePasswordMailSentSuccess,
       onClose = props.onClose;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
@@ -3517,11 +3542,17 @@ function DialogSelector(props) {
       registerStatus = _useState4[0],
       setRegisterStatus = _useState4[1];
 
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(null),
+      _useState6 = _slicedToArray(_useState5, 2),
+      changePasswordStatus = _useState6[0],
+      setChangePasswordStatus = _useState6[1];
+
   var _onClose = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
     setLoginStatus(null);
     setRegisterStatus(null);
+    setChangePasswordStatus(null);
     onClose();
-  }, [onClose, setLoginStatus, setRegisterStatus]);
+  }, [onClose, setLoginStatus, setRegisterStatus, setChangePasswordStatus]);
 
   var printDialog = Object(react__WEBPACK_IMPORTED_MODULE_0__["useCallback"])(function () {
     switch (dialogOpen) {
@@ -3548,13 +3579,15 @@ function DialogSelector(props) {
 
       case "changePassword":
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChangePasswordDialog__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          setLoginStatus: setLoginStatus,
-          onClose: openLoginDialog
+          status: changePasswordStatus,
+          setStatus: setChangePasswordStatus,
+          onClose: openLoginDialog,
+          onSuccess: onChangePasswordMailSentSuccess
         });
 
       default:
     }
-  }, [dialogOpen, openChangePasswordDialog, openLoginDialog, openRegisterDialog, openTermsDialog, _onClose, loginStatus, registerStatus, setLoginStatus, setRegisterStatus]);
+  }, [dialogOpen, openChangePasswordDialog, openLoginDialog, openRegisterDialog, openTermsDialog, _onClose, loginStatus, registerStatus, changePasswordStatus, setLoginStatus, setRegisterStatus, setChangePasswordStatus]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, dialogOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_shared_components_ModalBackdrop__WEBPACK_IMPORTED_MODULE_6__["default"], {
     open: true
   }), printDialog());
@@ -3566,7 +3599,8 @@ DialogSelector.propTypes = {
   onClose: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
   openTermsDialog: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
   openRegisterDialog: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
-  openChangePasswordDialog: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
+  openChangePasswordDialog: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired,
+  onChangePasswordMailSentSuccess: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.func.isRequired
 };
 /* harmony default export */ __webpack_exports__["default"] = (DialogSelector);
 

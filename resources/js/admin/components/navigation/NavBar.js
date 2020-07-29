@@ -342,7 +342,19 @@ function NavBar(props) {
                 size="large"
                 classes={{ text: classes.menuButtonText }}
               >
-                Homepage
+                Landing Page
+              </Button>
+            </a>
+            <a
+              href="/docs"
+              className={classes.noDecoration}
+            >
+              <Button
+                color="secondary"
+                size="large"
+                classes={{ text: classes.menuButtonText }}
+              >
+                Docs
               </Button>
             </a>
           </Box>
