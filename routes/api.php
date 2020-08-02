@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/courses', 'CourseController@getAllCoursesPaginated');
+
+Route::get('/courses/{id}/classes', 'CourseClassController@getAllClassesOfCoursePaginated');
+
 Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/user', 'UserController@getAuthUser');
     Route::post('/settings', 'UserController@saveUserProfile');
@@ -30,7 +34,9 @@ Route::group(['middleware' => 'auth:api'], function() {
 
         Route::post('/courses/new', 'CourseController@storeNewCourse');
         Route::delete('/courses/{id}/delete', 'CourseController@deleteCourse');
+
+        Route::get('/courses/{id}/classes/asadmin', 'CourseClassController@getAllClassesOfCoursePaginatedAsAdmin');
+        Route::post('/classes/{id}/togglePublished', 'CourseClassController@togglePublished');
+        Route::post('/classes/{id}/togglePublic', 'CourseClassController@togglePublic');
     });
 });
-
-Route::get('/courses', 'CourseController@getAllCoursesPaginated');

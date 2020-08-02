@@ -7,6 +7,8 @@ import Subscription from "./subscription/Subscription";
 import Ladder from "./ladders/Ladder";
 import User from "./users/User";
 import Course from "./courses/Course";
+import Posts from "./posts/Posts";
+import CourseDetails from "./courses/CourseDetails";
 import LadderProblem from "./ladders/problems/LadderProblem";
 import PropsRoute from "../../shared/components/PropsRoute";
 
@@ -95,6 +97,11 @@ function Routing(props) {
           selectUser={selectUser}
         />
         <PropsRoute
+          path="/admin/courses/:id"
+          component={CourseDetails}
+          selectCourse={selectCourse}
+        />
+        <PropsRoute
           path="/admin/courses"
           component={Course}
           pushMessageToSnackbar={pushMessageToSnackbar}
@@ -102,6 +109,18 @@ function Routing(props) {
           openAddNewCourseDialog={openAddNewCourseDialog}
           needToRefetchCourses={needToRefetchCourses}
           setNeedToRefetchCourses={setNeedToRefetchCourses}
+        />
+        <PropsRoute
+          path="/admin/posts"
+          component={Posts}
+          selectPosts={selectPosts}
+          EmojiTextArea={EmojiTextArea}
+          ImageCropper={ImageCropper}
+          Dropzone={Dropzone}
+          DateTimePicker={DateTimePicker}
+          posts={posts}
+          setPosts={setPosts}
+          pushMessageToSnackbar={pushMessageToSnackbar}
         />
         <PropsRoute
           path="/admin/subscription"

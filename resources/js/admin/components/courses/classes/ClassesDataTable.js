@@ -10,16 +10,18 @@ import {
   TableRow,
   withStyles,
   Button,
-  LinearProgress
+  LinearProgress,
+  Switch
 } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
-import EnhancedTableHead from "../../../shared/components/EnhancedTableHead";
-import ColorfulChip from "../../../shared/components/ColorfulChip";
-import unixToDateString from "../../../shared/functions/unixToDateString";
-import HighlightedInformation from "../../../shared/components/HighlightedInformation";
-import currencyPrettyPrint from "../../../shared/functions/currencyPrettyPrint";
+import EnhancedTableHead from "../../../../shared/components/EnhancedTableHead";
+import ColorfulChip from "../../../../shared/components/ColorfulChip";
+import unixToDateString from "../../../../shared/functions/unixToDateString";
+import HighlightedInformation from "../../../../shared/components/HighlightedInformation";
+import currencyPrettyPrint from "../../../../shared/functions/currencyPrettyPrint";
 import PageviewIcon from '@material-ui/icons/Pageview';
 import memoize from "memoize-one";
+import { useSnackbar } from 'notistack';
 
 const styles = theme => ({
   root: {
@@ -67,36 +69,44 @@ const LinearIndeterminate = (props) => {
   );
 };
 
-const columns = memoize(classes => [
+const columns = memoize((classes, togglePublish, togglePublic) => [
   {
     selector: "id",
     name: "#",
     sortable: true,
   },
   {
-    selector: "course_name",
-    name: "Course Name",
+    selector: "class_title",
+    name: "Class Title",
     sortable: true,
-  },
-  {
-    selector: "course_description",
-    name: "Description",
-    sortable: false,
   },
   {
     selector: "user.name",
-    name: "Mentor",
+    name: "Created By",
     sortable: true,
   },
   {
-    selector: "course_price",
-    name: "Course Price",
-    sortable: true,
+    name: "Is Published?",
+    button: false,
+    cell: (row) => <Switch
+      checked={row.is_published === 1}
+      color="secondary"
+      onChange={() => {togglePublish(row.id)}}
+    />
+  },
+  {
+    name: "Is Public?",
+    button: false,
+    cell: (row) => <Switch
+      checked={row.is_public === 1}
+      color="secondary"
+      onChange={() => {togglePublic(row.id)}}
+    />
   },
   {
     cell: (row) => (
-      <Link to={"/admin/courses/" + row.id} className={classes.noDecoration}>
-        <Button variant="outlined" size="small">View</Button>
+      <Link to="#" className={classes.noDecoration}>
+        <Button variant="outlined" size="small">View/Edit</Button>
       </Link>
     ),
     ignoreRowClick: true,
@@ -106,20 +116,29 @@ const columns = memoize(classes => [
   },
 ]);
 
-function CourseDataTable(props) {
-  const { theme, classes, needToRefetchCourses, setNeedToRefetchCourses } = props;
+function ClassesDataTable(props) {
+  const {
+    theme,
+    classes,
+    openAddClassPaper,
+    setIsEditingExistingClass,
+    setClassData
+  } = props;
 
+  const { enqueueSnackbar } = useSnackbar();
+
+  const [datasource, setDatasource] = useState(null);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const inputSearch = useRef();
 
-  const fetchCourses = useCallback((page = currentPage) => {
+  const fetchCourseClasses = useCallback((ndatasource = datasource, page = currentPage) => {
     setLoading(true);
-    axios.get("/api/courses?page=" + page + "&per_page=" + perPage + "&q=" + searchQuery).then((res) => {
+    axios.get(ndatasource + "?page=" + page + "&per_page=" + perPage + "&q=" + searchQuery).then((res) => {
       setData(res.data.data);
       setTotalRows(res.data.total);
       setLoading(false);
@@ -128,8 +147,8 @@ function CourseDataTable(props) {
 
   const handlePageChange = useCallback((page) => {
     setCurrentPage(page);
-    fetchCourses(page);
-  }, [setCurrentPage, fetchCourses]);
+    fetchCourseClasses(datasource, page);
+  }, [setCurrentPage, fetchCourseClasses, datasource]);
 
   const handlePerRowsChange = useCallback((newPerPage, page) => {
     setPerPage(newPerPage);
@@ -139,19 +158,38 @@ function CourseDataTable(props) {
     setSearchQuery(inputSearch.current.value);
   }, [setSearchQuery, inputSearch]);
 
-  useEffect(async => {
-    fetchCourses();
-    if (needToRefetchCourses) {
-      fetchCourses();
-      setNeedToRefetchCourses(false);
-    }
-  }, [fetchCourses, needToRefetchCourses, setNeedToRefetchCourses]);
+  const handleTogglePublish = useCallback((id) => {
+    axios.post("/api/classes/" + id + "/togglePublished").then(() => {
+      enqueueSnackbar('Successfully toggled publish request!', { variant: 'success' });
+      fetchCourseClasses(datasource, currentPage);
+    }).catch(() => {
+      enqueueSnackbar('Something went wrong!', { variant: 'error' });
+    });
+  }, [fetchCourseClasses, datasource, currentPage]);
+
+  const handleTogglePublic = useCallback((id) => {
+    axios.post("/api/classes/" + id + "/togglePublic").then(() => {
+      enqueueSnackbar('Successfully toggled public status request!', { variant: 'success' });
+      fetchCourseClasses(datasource, currentPage);
+    }).catch(() => {
+      enqueueSnackbar('Something went wrong!', { variant: 'error' });
+    });
+  }, [fetchCourseClasses, datasource, currentPage]);
+
+  useEffect(() => {
+    const url = window.location.href;
+    const urlArr = url.split("/");
+    const id = urlArr[urlArr.length - 1];
+    const ndatasource = "/api/courses/" + id + "/classes/asadmin";
+    setDatasource(ndatasource);
+    fetchCourseClasses(ndatasource);
+  }, [setDatasource, fetchCourseClasses]);
 
   return (
     <div className={classes.tableWrapper}>
       <DataTable
         noHeader={true}
-        columns={columns(classes)}
+        columns={columns(classes, handleTogglePublish, handleTogglePublic)}
         data={data}
         defaultSortField="id"
         highlightOnHover={true}
@@ -179,11 +217,12 @@ function CourseDataTable(props) {
   );
 }
 
-CourseDataTable.propTypes = {
+ClassesDataTable.propTypes = {
   theme: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  needToRefetchCourses: PropTypes.bool.isRequired,
-  setNeedToRefetchCourses: PropTypes.func.isRequired,
+  openAddClassPaper: PropTypes.func.isRequired,
+  setIsEditingExistingClass: PropTypes.func.isRequired,
+  setClassData: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(CourseDataTable);
+export default withStyles(styles, { withTheme: true })(ClassesDataTable);

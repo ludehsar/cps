@@ -31,15 +31,15 @@ class Course extends Model
     }
 
     public function enrolees() {
-        return $this->belongsToMany('App\Models\User')->as('enrolees')->wherePivotIn('status', ['enrolled', 'pending']);
+        return $this->belongsToMany('App\Models\User', 'enrolees')->wherePivotIn('status', ['enrolled', 'pending']);
     }
 
     public function approvedEnrolees() {
-        return $this->belongsToMany('App\Models\User')->as('enrolees')->wherePivot('status', 'enrolled');
+        return $this->belongsToMany('App\Models\User', 'enrolees')->wherePivot('status', 'enrolled');
     }
 
     public function ladders() {
-        return $this->belongsToMany('App\Models\Ladder')->as('recommended_ladders');
+        return $this->belongsToMany('App\Models\Ladder', 'recommended_ladders');
     }
 
     public function user() {
